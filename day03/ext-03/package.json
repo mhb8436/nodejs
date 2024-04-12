@@ -1,0 +1,15 @@
+{
+  "name": "ext-03",
+  "version": "1.0.0",
+  "description": "board ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ethan.lee",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.19.2"
+  }
+}
