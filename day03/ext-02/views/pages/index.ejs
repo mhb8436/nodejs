@@ -2,8 +2,10 @@
     <meta charset="UTF-8">
     <title>Print Content</title>
     <body>
-        <% for (var i=0; i < 5; i++) { %>
-            <h1><%=%>></h1>
-        <% } %>
+        <ul>
+            <% items.forEach(function(item) { %>
+                <li><%= item['title'] %> <%= item['content'] %></li>
+            <% }); %>
+        </ul>
     </body>
 </html>
