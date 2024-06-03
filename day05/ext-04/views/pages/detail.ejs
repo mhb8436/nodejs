@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%=detail['title']%></title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+  <script>
+    function delete_item() {
+      if(confirm('Really Delete') == true ){
+        document.forms['delete'].submit();
+      }
+    }
+  </script>
+</head>
+<body>
+  <%- include('../layouts/header') %>
+  
+  <main>
+    <form action="/update/<%=detail['id']%>" method="get" id="update"></form>
+    <form action="/delete/<%=detail['id']%>" method="get" id="delete"></form>
+
+    제목 : <h3><%=detail['title']%></h3>
+    <div>
+      작성자 :  <b><%=detail['writer']%></b>
+    </div>
+    <div>
+      작성일시 :  <b><%=detail['write_date']%></b>
+    </div>    
+    <div>
+      내용 : <h2> <%=detail['content']%>  </h2>
+    </div>
+
+    <button type="submit" form="update" value="submit">Update</button>
+    <button type="submit" onclick="delete_item()" value="submit">Delete</button>
+  </main>
+  
+  <%- include('../layouts/footer') %>
+</body>
+</html>

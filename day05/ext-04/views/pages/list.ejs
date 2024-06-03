@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리스트</title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../layouts/header') %>
+  <form action="/write" mthod="get" id="write">    
+  </form>
+  <button type="submit" form="write" value="submit">Write</button>
+  <main>
+    <div>
+        <table>
+          <thead>
+            <tr>
+              <th width="50%">제목</th>
+              <th>작성자</th>
+              <th>등록일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% items.forEach((item) => {%>
+            <tr>
+              <td><a href="/detail/<%=item['id']%>"><%=item['title']%></a></td>
+              <td><%=item['writer']%></td>
+              <td><%=item['write_date']%></td>
+            </tr>
+            <% });%>
+          </tbody>
+        </table>
+      </div>
+  </main>
+    
+  <%- include('../layouts/footer') %>
+</body>
+</html>
