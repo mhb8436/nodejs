@@ -1,19 +1,20 @@
 {
   "name": "ext-01",
   "version": "1.0.0",
-  "description": "sequelize sample",
+  "description": "mongoose",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev":"nodemon server.js"
   },
+  "keywords": [
+    "mongodb"
+  ],
   "author": "mhb8436",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "nodemon": "^3.1.2",
-    "sequelize": "^6.37.3",
-    "sequelize-cli": "^6.6.2",
-    "sqlite3": "^5.1.7"
+    "mongoose": "^8.4.1",
+    "nodemon": "^3.1.3"
   }
 }

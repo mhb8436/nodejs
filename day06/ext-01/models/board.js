@@ -1,6 +1,4 @@
-import { sequelize } from require('sequelize');
-
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     const Board = sequelize.define('Board', {
         id: {
             type: DataTypes.INTEGER,
@@ -17,4 +15,4 @@ export default (sequelize, DataTypes) => {
         underscore: true,
     });
     return Board;
-}
+};
