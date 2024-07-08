@@ -66,7 +66,7 @@ app.listen(3000, () => {
     models.sequelize.sync({force:false}).then(()=> {
         console.log(`DB 연결 성공`);
     }).catch((err) => {
-        console.error(`DB 연결 에러 : ${error}`);
+        console.error(`DB 연결 에러 : ${err}`);
         process.exit();
     });
 });
