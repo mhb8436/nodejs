@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%=detail['title']%></title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+  <script>
+    function delete_item() {
+      if(confirm('Really Delete') == true ){
+        document.forms['delete'].submit();
+      }
+    }
+  </script>
+  <%- include('../layouts/header') %>
+</head>
+<body>
+  <%- include('../layouts/nav') %>
+  
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">        
+        <h2>공지사항 상세</h2>        
+      </div>
+    
+      <form action="/update/<%=detail['id']%>" method="get" id="update"></form>
+      <form action="/delete/<%=detail['id']%>" method="get" id="delete"></form>
+        <div class="row">
+          <div class="blog-post">
+            <h2 class="blog-post-title"><%=detail['title']%></h2>
+            <p class="blog-post-meta"><%=detail['write_date']%> by <a href="#"><%=detail['writer']%></a></p>
+            <p><%=detail['content']%></p>
+          </div>
+      </div>
+      <button type="submit" form="update" value="submit" class="btn btn-warning">Update</button>
+      <button type="submit" onclick="delete_item()" value="submit" class="btn btn-danger">Delete</button>
+  </main>
+</div>
+  
+  <%- include('../layouts/footer') %>
+</body>
+</html>

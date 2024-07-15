@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글쓰기</title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+</head>
+
+<body>
+    <%- include('../layouts/header') %>
+    <div class="container">
+      <div class="py-5 text-center">        
+        <h2>공지사항 쓰기</h2>        
+      </div>      
+      <main>
+          <form action="/write" method="post" id="update">
+          <div class="row">              
+              <div class="col-sm-12 py-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">제목</span>
+                  </div>
+                  <input type="text" name="title" id="title" value="" size="20"></td>
+                </div>
+              </div>
+              <div class="col-sm-12 py-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">내용</span>
+                  </div>
+                  <textarea class="form-control" aria-label="내용" 
+                    name="content" id="content"  rows="10" cols="20"></textarea>
+                </div>
+              </div>
+              <div class="col-sm-12 py-3">
+                <button type="submit" form="update" value="submit" 
+                  class="btn btn-danger">Save</button>
+              </div>
+          </div>
+          </form>          
+      </main>
+    </div>    
+    <%- include('../layouts/footer') %>
+</body>

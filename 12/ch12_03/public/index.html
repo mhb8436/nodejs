@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #chat, #rooms, #users { list-style: none; padding: 0; }
+    #chat li, #rooms li, #users li { padding: 8px; margin-bottom: 10px; background: #f3f3f3; }
+    #chat li:nth-child(odd), #rooms li:nth-child(odd), #users li:nth-child(odd) { background: #e9e9e9; }
+  </style>
+  <!-- 부트스트랩 설치 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+  <section>
+    <div class="container py-5">
+      <div class="col-md-8 col-lg-6 col-xl-4"> 
+        <!-- 로그인 -->       
+        <h2>Login</h2>
+        <input id="username" placeholder="Enter username" autocomplete="off"/>
+        <button id="login" class="btn btn-danger">Login</button>
+      </div>
+      
+      <div class="card" id="chat-container" style="display:none; border-radius: 15px;">
+        <div class="card-body">
+          <!-- 룸 생성 -->
+          <h2>Create Room</h2>
+          <input id="room" name="room" placeholder="Enter room name" autocomplete="off"/>
+          <button id="create-room" class="btn btn-primary">Create Room</button>
+        </div>
+        <!-- 룸 목록 -->
+        <div class="card-body">
+          <h2>Rooms</h2>
+          <ul id="rooms"></ul>
+        </div>
+        <!-- 사용자 목록 -->
+        <div class="card-body">
+          <h2>Users</h2>
+          <ul id="users"></ul>
+        </div>
+        <!-- 채팅창 -->
+        <div class="card-body">
+          <h2>Chat</h2>
+          <ul id="chat"></ul>
+          <form id="form" action="">
+            <input id="input" autocomplete="off" placeholder="Type your message here"/><button class=""btn btn-info>Send</button>
+          </form>
+        </div>
+      </div>
+   </div>
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    var currentRoom = '';
+
+    var loginButton = document.getElementById('login'); // 로그인 버튼 
+    var usernameInput = document.getElementById('username'); // 사용자입력 창 
+    var chatContainer = document.getElementById('chat-container'); // 채팅 컨테이너
+    var form = document.getElementById('form'); // 메시지 입력 폼
+    var input = document.getElementById('input'); // 메시지 입력 input
+    var chatList = document.getElementById('chat'); // 채팅 리스트
+    var roomInput = document.getElementById('room'); // 롬 이름 입력 input
+    var createRoomButton = document.getElementById('create-room'); // 채팅 방 생성 버튼 
+    var roomsList = document.getElementById('rooms'); // 채팅방 목록 
+    var usersList = document.getElementById('users'); // 사용자 목록 
+
+    // 로그인 버튼 클릭 
+    loginButton.addEventListener('click', function() {
+      var username = usernameInput.value;
+      if (username) {
+        console.log(`login : ${username}`)
+        socket.emit('login', username); // 사용자 로그인 요청 
+      }
+    });
+
+    // 방생성 버튼 클릭 
+    createRoomButton.addEventListener('click', function() {
+      var room = roomInput.value;
+      if (room) {
+        socket.emit('create:room', room); // 방생성 요청 
+      }
+    });
+
+    // 메시지 입력 버튼 클릭 시 또는 엔터 
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (input.value) {
+        var room = currentRoom;
+        if(room){
+          console.log(`submit => ${room} ${input.value}`);
+          socket.emit('chat:message', { room, message: input.value });   // 채팅방에 메시지 전송 
+        }        
+        input.value = '';
+      }
+    });
+
+    // 리스닝 : 로그인 성공 
+    socket.on('login:success', function(data) {
+      chatContainer.style.display = 'block';
+      usernameInput.disabled = true;
+      loginButton.disabled = true;
+      updateRooms(data.rooms);  // 룸 정보 업데이트 
+    });
+
+    // 리스닝 : 룸 생성 
+    socket.on('room:created', function(room) {
+      var item = document.createElement('li');
+      item.textContent = room;
+      roomsList.appendChild(item);
+      item.addEventListener('click', function() {
+        currentRoom = room // 룸 최신화 
+        item.style = 'background-color:orange;'
+        socket.emit('join:room', room); // 룸에 들어옴을 알림 
+      });
+    });
+    // 리스닝 : 룸 아웃 
+    socket.on('room:exists', function(room) {
+      alert('Room ' + room + ' already exists.');
+    });
+    // 리스닝 : 룸 조인 
+    socket.on('room:joined', function(room) {
+      alert('Joined room: ' + room);
+    });
+
+    // 리스닝 : 룸 업데이트 
+    socket.on('update:rooms', function(rooms) {
+      updateRooms(rooms);
+    });
+
+    // 리스닝 : 사용자 업데이트 
+    socket.on('update:users', function(users) {
+      updateUsers(users);
+    });
+
+    // 리스닝 : 채팅 메시지
+    socket.on('chat:message', function(data) {
+      console.log(`received message => ${data}`);
+      var item = document.createElement('li');
+      item.textContent = data.user + ': ' + data.message;
+      chatList.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // 리스닝 : 사용자 방 조인 
+    socket.on('user:joined', function(user) {
+      var item = document.createElement('li');
+      item.textContent = user + ' joined the room';
+      chatList.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    
+    // 리스닝 : 사용자 방 나감 
+    socket.on('user:left', function(user) {
+      var item = document.createElement('li');
+      item.textContent = user + ' left the chat';
+      chatList.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    function updateRooms(rooms) {
+      roomsList.innerHTML = '';
+      rooms.forEach(function(room) {
+        var item = document.createElement('li');
+        item.textContent = room;
+        item.addEventListener('click', function() {
+          currentRoom = room;
+          item.style = 'background-color:orange;'
+          socket.emit('join:room', room);
+        });
+        roomsList.appendChild(item);
+      });
+    }
+
+    function updateUsers(users) {
+      usersList.innerHTML = '';
+      users.forEach(function(user) {
+        var item = document.createElement('li');
+        item.textContent = user;
+        usersList.appendChild(item);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+curl http://jsonplaceholder.typicode.com/posts
+
+curl -X POST -H "Content-Type: application/json" -d '{"title":"foo","body":"bar","userId":1}' \ 
+http://jsonplaceholder.typicode.com/posts
+
+curl -X PUT -H "Content-Type: application/json" -d '{"id":1,"title":"foo","body":"bar","userId":1}' \
+http://jsonplaceholder.typicode.com/posts/1
+
+curl -X DELETE http://jsonplaceholder.typicode.com/posts/1
+
+curl -H "Authorization: Bearer <token>" http://jsonplaceholder.typicode.com/protected
+
+
+
+
+

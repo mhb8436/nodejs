@@ -1,0 +1,13 @@
+<html>
+    <meta charset="UTF-8">
+    <title>EJS Tag</title>
+    <body>
+        <ul>
+        <% for (var i=0; i < data.length; i++) { %>
+            <li><%=data[i]['title']%> <%=data[i]['content']%></li>
+        <% } %>
+        </ul>
+    </body>
+</html>
+
+

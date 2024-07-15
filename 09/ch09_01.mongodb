@@ -1,0 +1,44 @@
+// 사용중인 DB 확인 
+db 
+
+// 데이터베이스 선택 
+use userdb
+
+// 컬렉션 보기
+show collections
+
+// 컬렉션 생성
+db.createCollection("users")
+
+// 컬렉션 삭제
+db.users.drop()
+
+
+// 데이터 삽입
+db.users.insertOne({ name: "Alice", age: 30, city: "New York" })
+db.users.insertMany([{ name: "Bob", age: 25, city: "Los Angeles" }, { name: "Charlie", age: 35, city: "Chicago" }])
+
+// 데이터 조회 
+db.users.find({})  // 모든 문서 조회
+db.users.find({ age: { $gt: 25 } })
+db.users.findOne({ name: "Alice" })
+
+// 데이터 수정
+db.users.updateOne({ name: "Alice" }, { $set: { age: 31 } }) 
+db.users.updateMany({ city: "Los Angeles" }, { $set: { city: "San Francisco" } }) 
+
+// 데이터 삭제
+db.users.deleteOne({ name: "Charlie" }) 
+db.users.deleteMany({ age: { $lt: 30 } })
+
+// 인덱스 생성 
+db.users.createIndex({ name: 1 })  // name 필드에 대해 오름차순 인덱스 생성
+
+// 컬렉션 삭제 
+db.users.drop()
+
+// 데이터베이스 삭제
+db.dropDatabase()
+
+// 정렬
+db.users.find({}).sort({ age: -1 })  // 나이를 기준으로 내림차순 정렬

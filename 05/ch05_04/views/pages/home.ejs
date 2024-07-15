@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>홈페이지</title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+  <%- include('../layouts/header') %>
+</head>
+<body>
+  <%- include('../layouts/nav') %>
+    
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Welcom Home</h1>       
+        <p></p>
+        <h3>코드는 시보다 더 많이 읽힌다. 좋은 코드는 읽기 쉬워야 한다. - Guido van Rossum (Python 창시자)</h3>
+        <h3>완벽한 소프트웨어를 만드는 가장 좋은 방법은 코드를 전혀 작성하지 않는 것이다. - Tom DeMarco (소프트웨어 엔지니어)</h3>
+        <h3>좋은 프로그래머는 코드가 아닌 데이터를 조작하는 데 더 많은 시간을 보낸다. - Robert C. Martin (클린 코드의 저자)</h3>
+        <h3>모든 복잡한 문제에는 잘못된 간단한 해답이 있다. - H.L. Mencken</h3>
+        <h3>프로그래밍이 재미없다면, 잘못하고 있는 것이다. - Andrew Hunt (The Pragmatic Programmer 공동 저자)</h3>
+        <h3>코드를 10배 빨리 작성하는 개발자는 없다. 대신, 그들은 10배 적은 코드를 작성한다. - Robert C. Martin</h3>
+        <h3>소프트웨어가 작동하는 것은 중요하지만, 소프트웨어가 이해되는 것은 더 중요하다. - Martin Fowler (Refactoring의 저자)</h3>
+        <h3>코드는 작성하는 시간보다 읽는 시간이 더 많이 걸린다. - Douglas Crockford</h3>
+      </div>      
+    </div>
+  </div>
+  <%- include('../layouts/footer') %>
+</body>
+</html>

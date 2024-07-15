@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Example</title>
+</head>
+<body>
+  <h1>WebSocket Example</h1>
+  <input type="text" id="message" placeholder="메시지를 입력하세요">
+  <button onclick="sendMessage()">Send</button>
+  <div id="responses"></div>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:8080');
+
+    ws.onopen = () => {
+      console.log('웹 소켓 연결이 열렸습니다.');
+    };
+
+    ws.onmessage = event => {
+      const responses = document.getElementById('responses');
+      responses.innerHTML += `<p>${event.data}</p>`;
+    };
+
+    ws.onclose = () => {
+      console.log('웹 소켓 연결이 닫혔습니다.');
+    };
+
+    function sendMessage() {
+      const messageInput = document.getElementById('message');
+      const message = messageInput.value;
+      ws.send(message);
+      messageInput.value = '';
+    }
+  </script>
+</body>
+</html>

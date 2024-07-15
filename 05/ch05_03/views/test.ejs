@@ -1,0 +1,18 @@
+<html>
+    <meta charset="UTF-8">
+    <title>Print Content</title>
+    <body>
+        <table>
+            <tbody>
+            <% 
+                items.forEach(function(item) { 
+            %>
+                <tr><td><%= item['title'] %></td> 
+                    <td><%= item['content'] %></td></tr>
+            <% 
+                }); 
+            %>
+            </tbody>
+        </table>
+    </body>
+</html>

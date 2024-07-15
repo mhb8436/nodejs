@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리스트</title>
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      background-color: orange;
+    }
+    ul#menu li {
+      display:inline;
+    }
+  </style>
+</head>
+<%- include('../layouts/header') %>
+<body>
+  <%- include('../layouts/nav') %>
+  <form action="/write" mthod="get" id="write">    
+  </form>
+  
+  <div class="container">
+    <div class="row">
+      <div class="py-5 text-center">        
+        <h2>공지사항 목록</h2>        
+      </div>  
+      <div class="col-sm-12" style="padding-bottom: 10px; padding-top: 10px;">
+        <button type="submit" form="write" value="submit" class="btn btn-info">Write</button>        
+      </div>
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" width="50%">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">등록일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% items.forEach((item) => {%>
+            <tr scope="row">
+              <td><a href="/detail/<%=item['id']%>"><%=item['title']%></a></td>
+              <td><%=item['writer']%></td>
+              <td><%=item['write_date']%></td>
+            </tr>
+            <% });%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    
+  <%- include('../layouts/footer') %>
+</body>
+</html>
