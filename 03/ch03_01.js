@@ -8,7 +8,7 @@ module.exports = add
 console.log(module)
 
 // 2
-module.exports.add = add;
-console.log(module)
+// module.exports.add = add;
+// console.log(module)
 
 
