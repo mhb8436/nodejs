@@ -1,7 +1,7 @@
 let pi;
-console.loog(pi);
+console.log(pi);
 pi = 3.141592
-console.loog(pi);
+console.log(pi);
 
 let pi2 = 3.141592
 console.log(pi2);

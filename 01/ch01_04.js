@@ -1,5 +1,5 @@
-radius += 2 
-console.log(radius);
+// radius += 2 
+// console.log(radius);
 
 let output = "hello";
 output += "world";
