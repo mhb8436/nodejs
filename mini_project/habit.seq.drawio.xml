@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
+    <mxGraphModel dx="1532" dy="350" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-1" value="브라우저(크롬)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="100" height="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-2" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="aM9ryv3xv72pqoxQDRHE-1" vertex="1">
+          <mxGeometry x="45" y="70" width="10" height="950" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-3" value="회원가입" style="html=1;verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="aM9ryv3xv72pqoxQDRHE-1" target="aM9ryv3xv72pqoxQDRHE-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-15" y="70" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-4" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="aM9ryv3xv72pqoxQDRHE-1" vertex="1">
+          <mxGeometry x="50" y="120" width="10" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-5" value="노드(app.js)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="220" y="40" width="100" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-6" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="aM9ryv3xv72pqoxQDRHE-5" vertex="1">
+          <mxGeometry x="45" y="80" width="10" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-7" value="/register - GET" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" source="aM9ryv3xv72pqoxQDRHE-2" target="aM9ryv3xv72pqoxQDRHE-6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="130" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-9" value="&amp;lt;html&amp;gt;&amp;lt;/html&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" source="aM9ryv3xv72pqoxQDRHE-6" target="aM9ryv3xv72pqoxQDRHE-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="160" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-1" value="디비(sqlite)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="425" y="40" width="100" height="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-2" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="hxon6CX6AzeOozQ5LjM2-1" vertex="1">
+          <mxGeometry x="45" y="80" width="10" height="940" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-3" value="/register - POST" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="240" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="185" y="240" />
+            </Array>
+            <mxPoint x="270" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-4" value="app.get(&#39;/register&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="110" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-5" value="app.post(&#39;/register&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="230" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-6" value="save user (name, username, password)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="280" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="365" y="280" />
+            </Array>
+            <mxPoint x="450" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-7" value="/login 페이지로 이동&amp;nbsp;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="300" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="300" />
+            </Array>
+            <mxPoint x="100" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-8" value="/login 페이지 요청 - GET" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="339.52" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="175" y="339.52" />
+            </Array>
+            <mxPoint x="260" y="339.52" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-9" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="265" y="320" width="10" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-10" value="app.get(&#39;/login&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="320" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-11" value="&amp;lt;html&amp;gt;로그인 페이지&amp;lt;/html&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="370" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="370" />
+            </Array>
+            <mxPoint x="100" y="370" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-12" value="/login 요청&amp;nbsp; - POST" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="410" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="410" />
+            </Array>
+            <mxPoint x="265" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-13" value="app.post(&#39;/login&#39;)&lt;div&gt;1. username, password check&amp;nbsp;&lt;br&gt;&lt;div&gt;2. req.session.user = user&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="400" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-14" value="redirect 습관 목록(/habit)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="480" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="480" />
+            </Array>
+            <mxPoint x="100" y="480" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-15" value="/habit 요청&amp;nbsp; - GET" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="510" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="510" />
+            </Array>
+            <mxPoint x="265" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-16" value="app.get(&#39;/habit&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="500" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-17" value="habit 테이블에서 습관 목록 가져옴&lt;div&gt;(req.session.user) 에서 아이디를 가져옴&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.2941" relative="1" as="geometry">
+            <mxPoint x="290" y="550" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="375" y="550" />
+            </Array>
+            <mxPoint x="460" y="550" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-18" value="습관 목록반환" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="460" y="580" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="385" y="580" />
+            </Array>
+            <mxPoint x="295" y="580" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-19" value="습관 목록 &amp;lt;html&amp;gt;&amp;lt;/html&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="590" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="590" />
+            </Array>
+            <mxPoint x="100" y="590" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-20" value="/habit/add 요청&amp;nbsp; - GET" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="640" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="640" />
+            </Array>
+            <mxPoint x="265" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-21" value="app.get(&#39;/habit/add&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="640" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-22" value="습관 추가 &amp;lt;html&amp;gt;&amp;lt;/html&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0028" relative="1" as="geometry">
+            <mxPoint x="265" y="680" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="680" />
+            </Array>
+            <mxPoint x="100" y="680" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-23" value="/habit/add 요청&amp;nbsp; - POST" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="720" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="720" />
+            </Array>
+            <mxPoint x="265" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-24" value="app.post(&#39;/habit/add&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="710" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-25" value="&lt;div&gt;1. 유저정보req.session.user&lt;/div&gt;&lt;div&gt;2. 습관명, 시작일, 종료일 habit&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.2941" relative="1" as="geometry">
+            <mxPoint x="280" y="780" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="365" y="780" />
+            </Array>
+            <mxPoint x="450" y="780" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-26" value="redirect 습관 목록(/habit)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="790" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="790" />
+            </Array>
+            <mxPoint x="100" y="790" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-27" value="/habit/1/record - GET" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="850" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="850" />
+            </Array>
+            <mxPoint x="265" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-28" value="app.get(&#39;/habit/:id/record&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="830" width="155" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-30" value="&lt;div&gt;1. 습관 ID를 이용해서 기록 목록을 조회&amp;nbsp;&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.2941" relative="1" as="geometry">
+            <mxPoint x="280" y="900" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="365" y="900" />
+            </Array>
+            <mxPoint x="450" y="900" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-31" value="기록 목록반환" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="445" y="920" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="370" y="920" />
+            </Array>
+            <mxPoint x="280" y="920" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-32" value="기록 목록을 반환 (&amp;lt;html&amp;gt;/&amp;lt;html&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="940" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="940" />
+            </Array>
+            <mxPoint x="100" y="940" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-33" value="기록 추가 페이지&lt;div&gt;(/habit/1/record/add)&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="980" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="980" />
+            </Array>
+            <mxPoint x="265" y="980" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-34" value="app.get(&#39;/habit/:id/record/add&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="970" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-36" value="기록 추가 html 반환" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="1010" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="1010" />
+            </Array>
+            <mxPoint x="100" y="1010" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-37" value="기록 추가 요청 - POST&lt;div&gt;(/habit/1/record/add)&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="1050" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180" y="1050" />
+            </Array>
+            <mxPoint x="265" y="1050" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-38" value="app.post(&#39;/habit/:id/record/add&#39;)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="1030" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-39" value="&lt;div&gt;1. 습관 ID를 이용해서 기록 추가&amp;nbsp;&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.2941" relative="1" as="geometry">
+            <mxPoint x="280" y="1090" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="365" y="1090" />
+            </Array>
+            <mxPoint x="450" y="1090" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-40" value="redirect 기록 목록(/habit/1/record)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0014" relative="1" as="geometry">
+            <mxPoint x="265" y="1120" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="190" y="1120" />
+            </Array>
+            <mxPoint x="100" y="1120" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hxon6CX6AzeOozQ5LjM2-42" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;" parent="1" vertex="1">
+          <mxGeometry x="-30" y="100" width="40" height="180" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

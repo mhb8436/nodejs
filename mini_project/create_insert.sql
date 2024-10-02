@@ -25,3 +25,4 @@ create table records (
     habit_id integer not null,
     FOREIGN KEY(habit_id) REFERENCES habits(id)
 );
+
