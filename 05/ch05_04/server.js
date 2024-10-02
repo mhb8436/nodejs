@@ -24,14 +24,17 @@ app.get('/detail/:id', (req, res) => {
     const id = req.params.id;
 
     const result = fs.readFileSync('test.json', 'utf-8');
-    const data = JSON.parse(result); 
+    let data = JSON.parse(result); 
     let detail = {};
 
     data['result'].forEach((item) => {
         if(item['id'] == id) {
             detail = item;
+            item.count = item.count + 1;
         }
     });
+    
+    fs.writeFileSync('test.json', JSON.stringify(data), 'utf-8');
 
     // const detail = data['result'].filter((item) => {
     //     return item['id'] == id;
@@ -47,6 +50,24 @@ app.get('/write', (req, res) => {
 
 app.use(express.urlencoded({ extended: true }));
 
+let maxId = 0
+const initId = () => {
+    const result = fs.readFileSync('test.json', 'utf-8');
+    let data = JSON.parse(result);
+    const arr = data['result'].map(x=>parseInt(x.id));
+    // console.log(arr.sort());
+    // console.log(Math.max(...arr))
+    maxId = Math.max(...arr);
+}
+
+const getId = () => {
+    return ++maxId;
+}
+
+initId();
+
+console.log(`getId() => ${getId()}`);
+console.log(`getId() => ${getId()}`);
 app.post('/write', (req, res) => {
     console.log('/write post', req.body);
     // save data to file

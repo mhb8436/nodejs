@@ -1,9 +1,11 @@
 const express = require('express');
 const fs = require('fs')
-const sqlite3 = require('sqlite3')
+const sqlite3 = require('sqlite3');
+
 const app = express();
 const path = require('path');
 const moment = require('moment');
+
 const db_name = path.join(__dirname, "board.db");
 const db = new sqlite3.Database(db_name)
 app.set('view engine', 'ejs');
@@ -15,7 +17,8 @@ const create_sql = `
         title VARCHAR(255), 
         content TEXT, 
         writer TEXT,
-        write_date TEXT
+        write_date TEXT,
+        count integer default 0
     )`;
     
 db.serialize(() => {
@@ -60,9 +63,10 @@ app.get('/list', (req, res) => {
 app.get('/detail/:id', (req, res) => {
     const id = req.params.id;
 
-    let sql = `select id, title, content, writer, write_date from board where id = ${id}`;
+    let sql = `select id, title, content, writer, write_date, count from board where id = ${id}`;
     console.log(`id => ${id}, sql => ${sql}`);
     let detail = {};
+    db.run(`update board set count = count + 1 where id = ${id}`, (err)=>{});
     db.all(sql, [], (err, rows) => { // 6. run query
         if (err) {
             console.error(err.message);

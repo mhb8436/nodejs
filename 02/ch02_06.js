@@ -5,13 +5,13 @@ arr.push(4)
 console.log('arr', arr)
 
 // map
-arr2 = arr.map(x=>{
+const arr2 = arr.map(x=>{
     return x+1;
 });
 console.log('arr2', arr2);
 
 // filter
-arr3 = arr.filter(x=> {
+const arr3 = arr.filter(x=> {
     return x%2 == 0; // boolean 
 });
 console.log('arr3', arr3)
@@ -22,8 +22,9 @@ arr.forEach((v, i)=> {
 });
 
 // sort
-arr5 = arr.sort((a,b) => {
+const arr5 = arr.sort((a,b) => {
+    console.log(a, b, b-a);
     return b - a;
 });
-console.log('arr5', arr5)
+console.log('arr5', arr5);
 
