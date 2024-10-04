@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>습관 기록 목록</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/habbit">습관 목록</a>
+        <a href="/register">회원 가입</a>
+        <a href="/logout">로그 아웃</a>
+      </nav>
+      <figure>
+        <!-- 습관 목록 출력 테이블 -->
+        <table style="width: 100%">
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>기록 메모</th>
+              <th>기록 생성일</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% records.forEach((item)=> { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.memo %></td>
+              <td><%= item.createdAt %></td>
+              <td>
+                <a href="/habit/<%=habit_id%>/record/<%= item.id %>/remove"
+                  >삭제</a
+                >
+              </td>
+            </tr>
+            <% });%>
+          </tbody>
+        </table>
+        <p></p>
+        <a
+          href="/habit/<%=habit_id%>/record/add"
+          style="width: 100%; text-align: center"
+          class="button"
+          >기록 추가</a
+        >
+        <a href="/habit">이전 페이지</a>
+      </figure>
+    </div>
+  </body>
+</html>

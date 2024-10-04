@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>습관 목록</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/habbit">습관 목록</a>
+        <a href="/register">회원 가입</a>
+        <a href="/logout">로그 아웃</a>
+      </nav>
+      <figure>
+        <!-- 습관 목록 출력 테이블 -->
+        <table style="width: 100%">
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>습관명</th>
+              <th>시작일-종료일</th>
+              <th>기록갯수</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% habits.forEach((item)=> { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td>
+                <a href="/habit/<%=item.id%>/record"><%= item.habit_name %></a>
+              </td>
+              <td><%= item.start_date %>~<%= item.end_date %></td>
+              <td><%= item.count %></td>
+              <td><a href="/habit/<%=item.id%>/remove">삭제</a></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <p></p>
+        <a
+          style="width: 100%; text-align: center"
+          href="/habit/add"
+          class="button"
+          >습관 추가</a
+        >
+      </figure>
+    </div>
+  </body>
+</html>
