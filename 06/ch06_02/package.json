@@ -4,11 +4,12 @@
   "description": "api board",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon run server.js"
+    "dev": "nodemon run api2.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^11.3.0",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "moment": "^2.30.1",
