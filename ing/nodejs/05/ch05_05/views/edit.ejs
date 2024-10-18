@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>게시글 수정</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>게시글 수정</h1>
+      <form action="/edit/<%=post['id']%>" method="post">
+        <figure>
+          <p>
+            <label>제목</label>
+            <input
+              type="text"
+              name="title"
+              value="<%=post['title']%>"
+              size="100"
+            />
+          </p>
+          <p>
+            <label>작성자</label>
+            <input
+              type="text"
+              name="author"
+              value="<%=post['author']%>"
+              size="10"
+            />
+          </p>
+          <p>
+            <lable>내용</lable>
+            <textarea name="content" rows="10"><%=post['content']%></textarea>
+          </p>
+        </figure>
+        <button type="submit">저장</button>
+        <a class="button" href="/list">목록</a>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>test.json 데이터 보기</title>
+    <!-- Un-Minified version -->
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css" />
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>제목</th>
+          <th>내용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% posts.forEach((item)=> { %>
+        <tr>
+          <td><%= item['title']%></td>
+          <td><%= item['content']%></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

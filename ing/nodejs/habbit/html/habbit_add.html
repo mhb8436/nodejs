@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>습관추가</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form action="/habit" method="post">
+        <figure>
+          <p>
+            <label>습관명</label>
+            <input type="text" name="habit_name" />
+          </p>
+          <p>
+            <label>시작일(YYYYMMDD)</label>
+            <input type="text" name="start_date" />
+          </p>
+          <p>
+            <label>종류일(YYYYMMDD)</label>
+            <input type="text" name="end_date" />
+          </p>
+          <button style="width: 100%" type="submit">저장</button>
+        </figure>
+      </form>
+    </div>
+  </body>
+</html>
