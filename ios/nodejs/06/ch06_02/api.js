@@ -52,7 +52,6 @@ app.get("/posts", (req, res) => {
     }
   });
 });
-
 // 2. GET /posts/1 게시글 상세
 app.get("/posts/:id", (req, res) => {
   const id = req.params.id;
