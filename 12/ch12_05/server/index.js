@@ -5,14 +5,17 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
 
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('a user connected', socket);
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -24,6 +27,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(3030, () => {
   console.log('listening on *:3000');
 });

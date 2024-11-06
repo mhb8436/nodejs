@@ -17,8 +17,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
 
-  useEffect(() => {
-    console.log('called useeffect')
+  useEffect(() => {    
     // 로그인 성공 시
     socket.on('login:success', (data) => {
       setIsLoggedIn(true);
@@ -62,7 +61,6 @@ function App() {
     });
 
     return () => {
-      console.log('unmount');
       socket.off('chat:message');
       socket.off('user:joined');
       socket.off('user:left');
