@@ -2,9 +2,15 @@
 # install postgresql 
 
 # create database and user 
-drop database tut08;
+drop database ch10;
 sudo -u postgres psql
-create database tut08;
+create database ch10;
 create user admin with encrypted password 'admin1234';
-grant all privileges on database tut08 to admin;
+grant all privileges on database ch10 to admin;
+
+# npx sequelize init 
+npx sequelize-cli init
+npx sequelize-cli seed:generate --name demo-user
+
+npx sequelize-cli db:seed:all
 

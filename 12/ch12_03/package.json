@@ -13,8 +13,9 @@
   "author": "mhb8436",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2",
+    "bootstrap": "^5.3.3",
+    "express": "^4.21.1",
     "nodemon": "^3.1.4",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.8.1"
   }
 }

@@ -16,7 +16,7 @@ app.use('/auth', authRouter);
 
 app.listen(PORT, () => {
     console.log(`Server will be start..`);
-    models.sequelize.sync({force:false}).then(()=> {
+    models.sequelize.sync({force:false}).then(()=> { // 모ㄹ을 
         console.log(`DB 연결 성공`);
     }).catch((err) => {
         console.error(`DB 연결 에러 : ${err}`);
