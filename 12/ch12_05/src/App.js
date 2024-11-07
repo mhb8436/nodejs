@@ -34,12 +34,13 @@ function App() {
 
   return (
     <div>
-      <h1>Socket.IO Chat</h1>
+      <h1>Message List</h1>
       <ul id="messages">
         {messages.map((msg, index) => (
           <li key={index}>{msg}</li>
         ))}
       </ul>
+      <h1>Send Message</h1>
       <input
         id="input"
         type="text"

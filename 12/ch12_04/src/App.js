@@ -47,6 +47,7 @@ function App() {
 
     // 채팅 메시지 수신 시
     socket.on('chat:message', (data) => {
+      console.log(data);
       setChatMessages((prevMessages) => [...prevMessages, `${data.user}: ${data.message}`]);
     });
 
@@ -129,7 +130,7 @@ function App() {
             <h2>Rooms</h2>
             <ul>
               {rooms.map((room, index) => (
-                <li key={index} onClick={() => handleJoinRoom(room)}>
+                <li key={index} type="button" onClick={() => handleJoinRoom(room)}>
                   {room}
                 </li>
               ))}
@@ -144,7 +145,10 @@ function App() {
               ))}
             </ul>
           </div>
-
+          <div className="currentRoom">
+            <h2>Current Room</h2>
+            {currentRoom}
+          </div>  
           <div className="chat">
             <h2>Chat</h2>
             <ul className="chat-messages">
