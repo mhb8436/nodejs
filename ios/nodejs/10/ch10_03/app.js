@@ -5,7 +5,7 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const postRoute = require("./routes/postRoute");
 const models = require("./models");
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 app.use(express.json());
 

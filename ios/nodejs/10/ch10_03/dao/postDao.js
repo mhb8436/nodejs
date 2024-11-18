@@ -36,10 +36,23 @@ const deletePost = async (id) => {
   });
 };
 
+const addComment = async (content, author, parentId) => {
+  return await Comment.create({ content, author, postId, parentId });
+};
+
+const getComments = async (postId) => {
+  return await Comment.findAll({
+    where: { postId, parentId: null },
+    include: [{ model: Comment, as: "Replies" }],
+  });
+};
+
 module.exports = {
   createPost,
   findAllPost,
   findPostById,
   updatePost,
   deletePost,
+  addComment,
+  getComments,
 };

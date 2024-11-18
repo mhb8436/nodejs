@@ -64,6 +64,34 @@ const deletePost = async (req, res) => {
   }
 };
 
+const addComment = async (req, res) => {
+  try {
+    const { content, author, parentId } = req.body;
+    const result = await postService.addComment(content, author, parentId);
+    if (result) {
+      res.status(200).json({ data: result, message: "success" });
+    } else {
+      res.status(404).json({ message: "not found post" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+const getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const result = await postService.getComments(postId);
+    if (result) {
+      res.status(200).json({ data: result, message: "success" });
+    } else {
+      res.status(404).json({ message: "not found post" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
 module.exports = {
   createPost,
   findPostById,

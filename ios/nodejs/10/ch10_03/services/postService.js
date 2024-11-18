@@ -22,10 +22,20 @@ const deletePost = async (id) => {
   return await postDao.deletePost(id);
 };
 
+const addComment = async (content, author, parentId) => {
+  return await postDao.addComment(content, author, parentId);
+};
+
+const getComments = async (postId) => {
+  return await postDao.getComments(postId);
+};
+
 module.exports = {
   createPost,
   findPostById,
   findAllPost,
   updatePost,
   deletePost,
+  addComment,
+  getComments,
 };
