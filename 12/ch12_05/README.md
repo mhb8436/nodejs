@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# React + Socket.IO 고급 채팅 애플리케이션
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+이 예제는 React와 Socket.IO를 사용한 고급 기능이 포함된 채팅 애플리케이션을 구현하는 방법을 보여줍니다.
 
-## Available Scripts
+## 프로젝트 구조
 
-In the project directory, you can run:
+```
+ch12_05/
+├── public/         # 정적 파일
+├── server/         # Socket.IO 서버
+├── src/           # React 애플리케이션
+│   ├── App.js     # 메인 컴포넌트
+│   ├── App.css    # 스타일시트
+│   └── index.js   # 진입점
+└── package.json   # 프로젝트 설정
+```
 
-### `npm start`
+## 주요 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React 기반의 고급 UI/UX
+- Socket.IO를 사용한 실시간 통신
+- 사용자 인증 및 권한 관리
+- 파일 전송 기능
+- 이모지 지원
+- 읽음 확인 기능
+- 타이핑 중 표시
+- 메시지 히스토리 관리
+- 실시간 알림
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 사용 방법
 
-### `npm test`
+1. 의존성 설치:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
 
-### `npm run build`
+2. 개발 서버 실행:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run dev
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. 프로덕션 빌드:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm run build
+```
 
-### `npm run eject`
+## 주요 코드 설명
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### React 컴포넌트 (App.js)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 상태 관리
+  - 메시지 목록
+  - 현재 입력 메시지
+- Socket.IO 이벤트 처리
+  - 메시지 수신
+  - 메시지 전송
+- UI 컴포넌트
+  - 메시지 목록 표시
+  - 메시지 입력 폼
+  - 전송 버튼
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Socket.IO 서버
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- 실시간 통신 처리
+- 파일 업로드/다운로드
+- 사용자 상태 관리
+- 메시지 전달 및 저장
+- 읽음 확인 처리
 
-## Learn More
+## 의존성
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- react
+- socket.io-client
+- express
+- socket.io
+- styled-components
+- 기타 React 관련 패키지들
