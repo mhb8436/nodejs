@@ -1,57 +1,91 @@
-# Chapter 14: 마이크로서비스 아키텍처
+# NestJS MSA 예제
 
-이 디렉토리는 Node.js를 사용한 마이크로서비스 아키텍처 구현 방법을 다루는 예제 코드를 포함하고 있습니다.
+이 프로젝트는 NestJS를 사용한 마이크로서비스 아키텍처 예제입니다.
 
-## 학습 목표
+## 프로젝트 구조
 
-- 마이크로서비스 설계 원칙
-- 서비스 간 통신 구현
-- 서비스 디스커버리
-- 로드 밸런싱
-- 서킷 브레이커 패턴
-- 분산 트랜잭션 처리
-- 모니터링과 로깅
-- 컨테이너화와 배포
+```
+project/
+├── api-gateway/          # API 게이트웨이 (포트: 3000)
+├── auth-service/         # 인증 서비스 (포트: 3001)
+├── user-service/         # 사용자 서비스 (포트: 3002)
+└── post-service/         # 게시글 서비스 (포트: 3003)
+```
 
-## 디렉토리 구조
+## 서비스 설명
 
-- **ch14_01/**: 기본 마이크로서비스 구조
-- **ch14_02/**: 서비스 간 통신 구현
-- **ch14_03/**: 서비스 디스커버리와 로드 밸런싱
-- **ch14_04/**: 분산 시스템 패턴
-- **ch14_05/**: 모니터링과 운영
+1. **API Gateway**
 
-## 사용 방법
+   - 모든 외부 요청의 진입점
+   - 라우팅 및 인증 처리
+   - 서비스 간 통신 조정
 
-1. 이 디렉토리로 이동합니다:
+2. **Auth Service**
 
-   ```bash
-   cd 14
-   ```
+   - 사용자 인증 처리
+   - JWT 토큰 발급
+   - 권한 관리
 
-2. 필요한 의존성을 설치합니다:
+3. **User Service**
 
-   ```bash
-   npm install
-   ```
+   - 사용자 정보 관리
+   - 프로필 CRUD
+   - 사용자 설정 관리
 
-3. 예제를 실행합니다:
-   ```bash
-   # ch14_01 디렉토리로 이동
-   cd ch14_01
-   npm start
-   ```
+4. **Post Service**
+   - 게시글 CRUD
+   - 게시글 검색
+   - 게시글 통계
 
-## 사전 준비
+## 실행 방법
 
-- Node.js가 설치되어 있어야 합니다
-- npm이 설치되어 있어야 합니다
-- Docker에 대한 기본 이해가 필요합니다
-- Chapter 01-13의 내용을 이해하고 있어야 합니다
+1. 각 서비스 디렉토리에서 의존성 설치:
 
-## 참고 사항
+```bash
+cd api-gateway && npm install
+cd ../auth-service && npm install
+cd ../user-service && npm install
+cd ../post-service && npm install
+```
 
-- 각 서비스는 독립적으로 배포 가능해야 합니다
-- 서비스 간 통신은 API 게이트웨이를 통해 관리합니다
-- 장애 전파를 방지하기 위한 격리 전략이 필요합니다
-- 모니터링과 로깅은 중앙화된 시스템을 사용합니다
+2. 각 서비스 실행:
+
+```bash
+# API Gateway
+cd api-gateway && npm run start:dev
+
+# Auth Service
+cd auth-service && npm run start:dev
+
+# User Service
+cd user-service && npm run start:dev
+
+# Post Service
+cd post-service && npm run start:dev
+```
+
+## API 엔드포인트
+
+### API Gateway (http://localhost:3000)
+
+- POST /auth/login - 로그인
+- POST /auth/register - 회원가입
+- GET /users - 사용자 목록 조회
+- GET /users/:id - 사용자 상세 조회
+- GET /posts - 게시글 목록 조회
+- POST /posts - 게시글 작성
+- GET /posts/:id - 게시글 상세 조회
+
+## 서비스 간 통신
+
+- HTTP 통신
+- TCP 통신
+- 메시지 큐 (RabbitMQ)
+
+## 데이터베이스
+
+각 서비스는 독립적인 데이터베이스를 사용합니다:
+
+- Auth Service: PostgreSQL
+- User Service: PostgreSQL
+- Post Service: PostgreSQL

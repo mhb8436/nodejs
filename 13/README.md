@@ -1,57 +1,64 @@
-# Chapter 13: GraphQL과 API 설계
+# NestJS 튜토리얼
 
-이 디렉토리는 Node.js에서 GraphQL을 사용한 API 설계와 구현 방법을 다루는 예제 코드를 포함하고 있습니다.
+이 튜토리얼은 Express.js 개발자를 위한 NestJS 학습 가이드입니다.
 
-## 학습 목표
+## 목차
 
-- GraphQL 스키마 설계
-- Resolver 구현
-- Type 정의와 유효성 검사
-- N+1 문제 해결
-- 데이터 로더 패턴
-- 인증 및 권한 관리
-- 실시간 구독 구현
-- 에러 처리와 로깅
+1. 기본 개념
 
-## 디렉토리 구조
+   - 모듈 (Modules)
+   - 컨트롤러 (Controllers)
+   - 서비스 (Services)
+   - 의존성 주입 (Dependency Injection)
 
-- **ch13_01/**: 기본 GraphQL 서버 구현
-- **ch13_02/**: TypeScript와 GraphQL 통합
-- **ch13_03/**: 데이터 로더 패턴 구현
-- **ch13_04/**: 실시간 구독 기능
-- **ch13_05/**: 고급 GraphQL 기능
+2. 데이터베이스 연동
 
-## 사용 방법
+   - TypeORM 설정
+   - 엔티티 정의
+   - CRUD 작업
 
-1. 이 디렉토리로 이동합니다:
+3. 미들웨어와 가드
 
-   ```bash
-   cd 13
-   ```
+   - 커스텀 미들웨어
+   - 가드 (Guards)
+   - 인터셉터 (Interceptors)
 
-2. 필요한 의존성을 설치합니다:
+4. 인증과 권한
 
-   ```bash
-   npm install
-   ```
+   - JWT 인증
+   - 역할 기반 접근 제어
 
-3. 예제를 실행합니다:
-   ```bash
-   # ch13_01 디렉토리로 이동
-   cd ch13_01
-   npm start
-   ```
+5. API 문서화
+   - Swagger 설정
+   - API 엔드포인트 문서화
 
-## 사전 준비
+## 시작하기
 
-- Node.js가 설치되어 있어야 합니다
-- npm이 설치되어 있어야 합니다
-- TypeScript에 대한 기본 이해가 필요합니다
-- Chapter 01-12의 내용을 이해하고 있어야 합니다
+```bash
+# 프로젝트 설치
+npm install
 
-## 참고 사항
+# 개발 서버 실행
+npm run start:dev
+```
 
-- GraphQL 스키마는 API의 계약서입니다
-- N+1 문제를 방지하기 위해 데이터 로더를 사용합니다
-- 실시간 구독은 WebSocket을 통해 구현됩니다
-- 스키마 최적화가 성능에 큰 영향을 미칩니다
+## 프로젝트 구조
+
+```
+src/
+├── app.module.ts          # 루트 모듈
+├── main.ts               # 애플리케이션 엔트리 포인트
+├── users/                # 사용자 모듈
+│   ├── users.module.ts
+│   ├── users.controller.ts
+│   ├── users.service.ts
+│   └── dto/
+│       ├── create-user.dto.ts
+│       └── update-user.dto.ts
+└── auth/                 # 인증 모듈
+    ├── auth.module.ts
+    ├── auth.controller.ts
+    ├── auth.service.ts
+    └── guards/
+        └── jwt-auth.guard.ts
+```
