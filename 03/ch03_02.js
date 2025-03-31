@@ -114,7 +114,6 @@ const filteredLogger = winston.createLogger({
     }),
   ],
 });
-
 console.log("\n=== 로그 필터링 ===");
 filteredLogger.error("이것은 기록됩니다");
 filteredLogger.warn("이것도 기록됩니다");
