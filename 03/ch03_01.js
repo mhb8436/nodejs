@@ -1,14 +1,49 @@
-const  add = (a,b) => a+b;
+// 1. CommonJS 모듈 시스템
+const math = require("./modules/math");
+const { add, subtract } = require("./modules/math");
+const user = require("./modules/user");
 
-// for test
-// console.log(module)
+console.log("=== CommonJS 모듈 시스템 ===");
+console.log("math.add(5, 3):", math.add(5, 3));
+console.log("math.subtract(10, 4):", math.subtract(10, 4));
+console.log("구조 분해 할당으로 가져온 add(7, 2):", add(7, 2));
+console.log("user 정보:", user);
 
-// 1
-module.exports = add
-console.log(module)
+// 2. ES 모듈 시스템
+import { sum, multiply } from "./modules/math.mjs";
+import { formatDate } from "./modules/date.mjs";
 
-// 2
-// module.exports.add = add;
-// console.log(module)
+console.log("\n=== ES 모듈 시스템 ===");
+console.log("sum(1, 2, 3, 4, 5):", sum(1, 2, 3, 4, 5));
+console.log("multiply(2, 3, 4):", multiply(2, 3, 4));
+console.log("formatDate(new Date()):", formatDate(new Date()));
 
+// 3. 모듈 캐싱
+const counter1 = require("./modules/counter");
+const counter2 = require("./modules/counter");
 
+console.log("\n=== 모듈 캐싱 ===");
+console.log("counter1.getCount():", counter1.getCount());
+counter1.increment();
+console.log(
+  "counter1.increment() 후 counter2.getCount():",
+  counter2.getCount()
+);
+
+// 4. 모듈 경로 해석
+const path = require("path");
+console.log("\n=== 모듈 경로 해석 ===");
+console.log("__dirname:", __dirname);
+console.log("__filename:", __filename);
+console.log(
+  'path.join(__dirname, "modules"):',
+  path.join(__dirname, "modules")
+);
+
+// 5. 모듈 내보내기 방식
+const { default: defaultExport } = require("./modules/export-examples");
+const { namedExport } = require("./modules/export-examples");
+
+console.log("\n=== 모듈 내보내기 방식 ===");
+console.log("defaultExport:", defaultExport);
+console.log("namedExport:", namedExport);

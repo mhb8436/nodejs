@@ -1,30 +1,34 @@
-let arr = [1,2,3]
+const fs = require("fs");
+const { Transform } = require("stream");
 
-// push 
-arr.push(4)
-console.log('arr', arr)
+// 파일 스트림 읽기
+const readStream = fs.createReadStream("input.txt");
+const writeStream = fs.createWriteStream("output.txt");
 
-// map
-const arr2 = arr.map(x=>{
-    return x+1;
-});
-console.log('arr2', arr2);
+// 스트림 파이프
+readStream.pipe(writeStream);
 
-// filter
-const arr3 = arr.filter(x=> {
-    return x%2 == 0; // boolean 
-});
-console.log('arr3', arr3)
-
-// forEach
-arr.forEach((v, i)=> {
-    console.log('arr4', v+2)
+// 커스텀 변환 스트림
+const upperCaseTransform = new Transform({
+  transform(chunk, encoding, callback) {
+    callback(null, chunk.toString().toUpperCase());
+  },
 });
 
-// sort
-const arr5 = arr.sort((a,b) => {
-    console.log(a, b, b-a);
-    return b - a;
-});
-console.log('arr5', arr5);
+// 스트림 체이닝
+fs.createReadStream("input.txt")
+  .pipe(upperCaseTransform)
+  .pipe(fs.createWriteStream("uppercase.txt"));
 
+// 스트림 이벤트
+readStream.on("data", (chunk) => {
+  console.log("데이터 청크:", chunk.toString());
+});
+
+readStream.on("end", () => {
+  console.log("스트림 읽기 완료");
+});
+
+readStream.on("error", (err) => {
+  console.error("스트림 에러:", err);
+});
