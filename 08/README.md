@@ -1,89 +1,69 @@
-# Node.js 튜토리얼: Sequelize와 Express를 활용한 CRUD 예제
+# Chapter 08: 데이터베이스 연동과 모던 JavaScript
 
-## 프로젝트 구조
+이 디렉토리는 Node.js에서 데이터베이스 연동과 모던 JavaScript 기능을 다루는 예제 코드를 포함하고 있습니다.
 
-```
-08/
-├── README.md
-├── ch08_01/
-│   ├── ch08_01.js
-│   ├── package.json
-│   └── sample.sqlite
-├── ch08_02/
-│   ├── board.sqlite3
-│   ├── package.json
-│   ├── server.js
-│   ├── config/
-│   │   ├── config.json
-│   │   └── config.postgres.json
-│   ├── models/
-│   │   ├── board.js
-│   │   └── index.js
-│   └── public/
-│       └── uploads/
-│           └── bg-1720948634012.jpg
-└── ext-02/
-    ├── common/
-    │   ├── export.js
-    │   └── import.js
-    ├── es6/
-    │   ├── export.js
-    │   ├── import.js
-    │   └── package.json
-```
+## 학습 목표
 
-### 디렉토리 및 파일 설명
+- SQLite 데이터베이스 연동
+- 데이터베이스 CRUD 작업
+- 모던 JavaScript 문법
+- ES6+ 기능 활용
+- 비동기 데이터 처리
+- 데이터베이스 트랜잭션
+- 모델 기반 데이터 관리
+- RESTful API 구현
 
-- **ch08_01/**: 간단한 Node.js 예제 코드가 포함된 디렉토리.
+## 디렉토리 구조
 
-  - `ch08_01.js`: 예제 코드 파일.
-  - `package.json`: 프로젝트 의존성 관리 파일.
-  - `sample.sqlite`: SQLite 데이터베이스 파일.
+- **ch08_01/**: SQLite 기본 연동
+  - 데이터베이스 연결
+  - 기본 CRUD 작업
+  - 트랜잭션 처리
+- **ch08_02/**: 게시판 구현
+  - Express.js 서버
+  - SQLite 모델
+  - RESTful API
+  - 정적 파일 서빙
+- **ext-02/**: 모던 JavaScript 확장
+  - ES6+ 문법
+  - 공통 유틸리티
+  - 모듈 시스템
 
-- **ch08_02/**: Sequelize와 Express를 활용한 CRUD 예제 코드가 포함된 디렉토리.
+## 사용 방법
 
-  - `board.sqlite3`: SQLite 데이터베이스 파일.
-  - `package.json`: 프로젝트 의존성 관리 파일.
-  - `server.js`: Express 서버 코드. Sequelize를 사용하여 데이터베이스와 상호작용.
-  - `config/`: 데이터베이스 설정 파일 디렉토리.
-    - `config.json`: 기본 데이터베이스 설정 파일.
-    - `config.postgres.json`: PostgreSQL용 설정 파일.
-  - `models/`: Sequelize 모델 정의 디렉토리.
-    - `board.js`: `Board` 모델 정의 파일.
-    - `index.js`: Sequelize 초기화 및 모델 로딩 파일.
-  - `public/uploads/`: 업로드된 파일 저장 디렉토리.
-    - `bg-1720948634012.jpg`: 업로드된 이미지 파일 예제.
+1. 이 디렉토리로 이동합니다:
 
-- **ext-02/**: ES6 모듈과 CommonJS 모듈 예제 코드가 포함된 디렉토리.
-  - `common/`: CommonJS 모듈 예제 디렉토리.
-    - `export.js`: CommonJS 방식의 모듈 내보내기 예제.
-    - `import.js`: CommonJS 방식의 모듈 가져오기 예제.
-  - `es6/`: ES6 모듈 예제 디렉토리.
-    - `export.js`: ES6 방식의 모듈 내보내기 예제.
-    - `import.js`: ES6 방식의 모듈 가져오기 예제.
-    - `package.json`: ES6 모듈 관련 설정 파일.
+   ```bash
+   cd 08
+   ```
 
-## 주요 코드 설명
+2. 필요한 의존성을 설치합니다:
 
-### Sequelize 모델 초기화 (`models/index.js`)
+   ```bash
+   npm install
+   ```
 
-`models/index.js` 파일은 Sequelize를 초기화하고 모델을 로드하는 역할을 합니다. 데이터베이스 설정은 `config/config.json` 파일에서 가져옵니다.
+3. 예제를 실행합니다:
 
-### Express 서버 (`server.js`)
+   ```bash
+   # ch08_01 디렉토리로 이동하여 SQLite 예제 실행
+   cd ch08_01
+   node ch08_01.js
 
-`server.js` 파일은 Express를 사용하여 RESTful API를 구현합니다. 주요 엔드포인트:
+   # ch08_02 디렉토리로 이동하여 게시판 서버 실행
+   cd ../ch08_02
+   npm start
+   ```
 
-- `GET /boards`: 모든 게시글 조회.
-- `POST /boards`: 게시글 생성.
-- `PUT /boards/:id`: 게시글 수정.
-- `DELETE /boards/:id`: 게시글 삭제.
+## 사전 준비
 
-### 파일 업로드
+- Node.js가 설치되어 있어야 합니다
+- npm이 설치되어 있어야 합니다
+- Chapter 01-07의 내용을 이해하고 있어야 합니다
 
-`multer`를 사용하여 파일 업로드를 처리하며, 업로드된 파일은 `public/uploads/` 디렉토리에 저장됩니다.
+## 참고 사항
 
-- 업로드된 파일은 고유한 이름으로 저장되며, 경로는 `/downloads/`로 제공됩니다.
-
-### 데이터베이스 동기화
-
-서버 시작 시 `models.sequelize.sync()`를 호출하여 데이터베이스와 모델을 동기화합니다. `force: false` 옵션으로 기존 데이터를 유지합니다.
+- SQLite는 파일 기반 데이터베이스입니다
+- 데이터베이스 작업은 비동기로 처리합니다
+- 트랜잭션을 통해 데이터 일관성을 유지합니다
+- 모던 JavaScript 문법을 활용하여 코드를 간결하게 작성합니다
