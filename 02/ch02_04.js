@@ -1,48 +1,20 @@
 const http = require("http");
-const url = require("url");
 
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
+  // 응답 헤더 설정
+  res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
 
-  // 라우팅 처리
-  switch (parsedUrl.pathname) {
-    case "/":
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("홈페이지입니다.");
-      break;
+  // 요청 정보 출력
+  console.log("요청 URL:", req.url);
+  console.log("요청 메서드:", req.method);
+  console.log("요청 헤더:", req.headers);
 
-    case "/about":
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("소개 페이지입니다.");
-      break;
-
-    case "/api/data":
-      if (req.method === "GET") {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "API 응답입니다." }));
-      } else if (req.method === "POST") {
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-        req.on("end", () => {
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({
-              message: "데이터를 받았습니다.",
-              data: body,
-            })
-          );
-        });
-      }
-      break;
-
-    default:
-      res.writeHead(404, { "Content-Type": "text/plain" });
-      res.end("페이지를 찾을 수 없습니다.");
-  }
+  // 응답 메시지 전송
+  res.end("안녕하세요! Node.js 웹 서버입니다.");
 });
 
-server.listen(3000, () => {
-  console.log("서버가 3000번 포트에서 실행 중입니다.");
+// 서버 시작
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
 });
