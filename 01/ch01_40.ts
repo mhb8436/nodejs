@@ -90,7 +90,7 @@ printVehicleInfo(car);
 printVehicleInfo(bike);
 
 // 타입 단언 사용
-console.log("String length:", stringLength);
+console.log("String length:", length);
 
 // 타입 서술자 사용
 const userData = {
