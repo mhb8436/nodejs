@@ -5,11 +5,13 @@ import { PostService } from "./post.service";
 import { Post } from "./entities/post.entity";
 import { Comment } from "./entities/comment.entity";
 import { Like } from "./entities/like.entity";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.DATABASE_HOST,
