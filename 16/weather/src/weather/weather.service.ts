@@ -6,11 +6,11 @@ import { firstValueFrom } from 'rxjs';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ConfigService } from '@nestjs/config';
 import { Weather, WeatherDocument } from './schemas/weather.schema';
 
 @Injectable()
 export class WeatherService {
-  private readonly OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
   private readonly CACHE_TTL = 300; // 5분
 
   constructor(
@@ -18,13 +18,20 @@ export class WeatherService {
     private readonly httpService: HttpService,
     @InjectModel(Weather.name)
     private weatherModel: Model<WeatherDocument>,
+    private readonly configService: ConfigService,
   ) {}
 
   private async fetchAndCacheWeatherData() {
+    const apiKey = this.configService.get<string>('OPENWEATHER_API_KEY');
+    if (!apiKey) {
+      console.error('OPENWEATHER_API_KEY is not defined');
+      return;
+    }
+
     try {
       const cities = ['Seoul', 'Busan', 'Incheon'];
       for (const city of cities) {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.OPENWEATHER_API_KEY}&units=metric`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
         const response = await firstValueFrom(this.httpService.get(url));
 
         // Redis에 실시간 데이터 캐싱
