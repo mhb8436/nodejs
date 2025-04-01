@@ -1,26 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CacheModule } from '@nestjs/cache-manager';
-import * as redisStore from 'cache-manager-redis-store';
 import { HttpModule } from '@nestjs/axios';
+import { CacheModule } from '@nestjs/cache-manager';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    CacheModule.register({
-      store: redisStore,
-      host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
-    }),
-    ScheduleModule.forRoot(),
     HttpModule,
+    CacheModule.register({
+      ttl: 300 * 1000, // 5분
+      max: 100, // 최대 캐시 항목 수
+    }),
+    MongooseModule.forRoot('mongodb://localhost:27017/weather-db'),
+    ScheduleModule.forRoot(),
+    WeatherModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
