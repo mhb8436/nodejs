@@ -81,9 +81,8 @@ export class PostService {
     if (!post) {
       throw new NotFoundException("게시글을 찾을 수 없습니다.");
     }
-
     const existingLike = await this.likeRepository.findOne({
-      where: { postId, userId },
+      where: { post: { id: postId }, userId },
     });
 
     if (existingLike) {

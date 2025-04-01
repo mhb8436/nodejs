@@ -89,3 +89,12 @@ cd post-service && npm run start:dev
 - Auth Service: PostgreSQL
 - User Service: PostgreSQL
 - Post Service: PostgreSQL
+
+```bash
+psql postgreql
+create database mydb3_user;
+create database mydb3_post;
+GRANT ALL PRIVILEGES ON DATABASE mydb3_user TO myuser;
+GRANT ALL PRIVILEGES ON DATABASE mydb3_post TO myuser;
+
+```

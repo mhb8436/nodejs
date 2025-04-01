@@ -4,16 +4,26 @@ import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { User } from "./entities/user.entity";
 import { Profile } from "./entities/profile.entity";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+console.log("Database Config:", {
+  host: process.env.DATABASE_HOST,
+  port: process.env.DATABASE_PORT,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+});
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "postgres",
-      password: "postgres",
-      database: "user_db",
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [User, Profile],
       synchronize: true,
     }),

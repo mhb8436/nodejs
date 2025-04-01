@@ -17,7 +17,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: "로그인 성공" })
   @ApiResponse({ status: 401, description: "인증 실패" })
   async login(@Body() loginDto: LoginDto) {
-    return firstValueFrom(this.authClient.send({ cmd: "login" }, loginDto));
+    return firstValueFrom(this.authClient.send("login", loginDto));
   }
 
   @Post("register")
@@ -25,8 +25,6 @@ export class AuthController {
   @ApiResponse({ status: 201, description: "회원가입 성공" })
   @ApiResponse({ status: 400, description: "잘못된 요청" })
   async register(@Body() registerDto: RegisterDto) {
-    return firstValueFrom(
-      this.authClient.send({ cmd: "register" }, registerDto)
-    );
+    return firstValueFrom(this.authClient.send("register", registerDto));
   }
 }

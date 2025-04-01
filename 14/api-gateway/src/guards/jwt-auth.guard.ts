@@ -3,13 +3,17 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  Inject,
 } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly authClient: ClientProxy) {}
+  constructor(
+    @Inject("AUTH_SERVICE")
+    private readonly authClient: ClientProxy
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -21,7 +25,7 @@ export class JwtAuthGuard implements CanActivate {
 
     try {
       const user = await firstValueFrom(
-        this.authClient.send({ cmd: "validate_token" }, { token })
+        this.authClient.send("validate_token", { token })
       );
       request.user = user;
       return true;

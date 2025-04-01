@@ -9,10 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const jwt_1 = require("@nestjs/jwt");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const user_entity_1 = require("./entities/user.entity");
-const jwt_1 = require("@nestjs/jwt");
+const dotenv = require("dotenv");
+dotenv.config();
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -21,18 +23,18 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forRoot({
                 type: "postgres",
-                host: "localhost",
-                port: 5432,
-                username: "postgres",
-                password: "postgres",
-                database: "auth_db",
+                host: process.env.DATABASE_HOST,
+                port: parseInt(process.env.DATABASE_PORT),
+                username: process.env.DATABASE_USERNAME,
+                password: process.env.DATABASE_PASSWORD,
+                database: process.env.DATABASE_NAME,
                 entities: [user_entity_1.User],
-                synchronize: true,
+                synchronize: false,
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
             jwt_1.JwtModule.register({
-                secret: "your-secret-key",
-                signOptions: { expiresIn: "1h" },
+                secret: process.env.JWT_SECRET || "your-secret-key",
+                signOptions: { expiresIn: "1d" },
             }),
         ],
         controllers: [auth_controller_1.AuthController],
