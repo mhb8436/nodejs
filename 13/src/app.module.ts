@@ -13,9 +13,9 @@ import { Post } from "./posts/entities/post.entity";
       type: "postgres",
       host: "localhost",
       port: 5432,
-      username: "postgres",
-      password: "postgres",
-      database: "nestjs_tutorial",
+      username: "myuser",
+      password: "mypassword",
+      database: "mydb3",
       entities: [User, Post],
       synchronize: true, // 개발 환경에서만 사용 (자동 스키마 동기화)
     }),

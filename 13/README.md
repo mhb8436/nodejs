@@ -38,6 +38,11 @@
 # 프로젝트 설치
 npm install
 
+psql postgres
+CREATE DATABASE mydb3;
+CREATE USER myuser WITH PASSWORD 'mypassword';
+GRANT ALL PRIVILEGES ON DATABASE mydb3 TO myuser;
+
 # 개발 서버 실행
 npm run start:dev
 ```
