@@ -59,7 +59,8 @@
 1. 이 디렉토리로 이동합니다:
 
    ```bash
-   cd 01
+   npm install -g typescript
+   cd 01 && tsc ch01_34.ts
    ```
 
 2. 예제를 실행합니다:
