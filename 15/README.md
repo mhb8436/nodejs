@@ -13,6 +13,19 @@
 
 ```bash
 # 의존성 설치
+# NestJS 핵심 패키지
+npm install @nestjs/common @nestjs/core @nestjs/platform-express
+
+# GraphQL 관련 패키지
+npm install @apollo/server @nestjs/apollo @nestjs/graphql graphql
+
+# 데이터베이스 관련 패키지
+npm install @nestjs/typeorm typeorm sqlite3 @prisma/client prisma
+
+# 유틸리티 패키지
+npm install reflect-metadata rxjs
+
+
 npm install
 
 # Prisma 클라이언트 생성

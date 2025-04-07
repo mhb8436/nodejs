@@ -36,9 +36,16 @@
 
 ```bash
 # 프로젝트 설치
-npm install
+npm install -g @nestjs/cli
+npm install pg
+
+npm install --save @nestjs/swagger
+npm i --save class-validator class-transformer
+npm install --save typeorm @nestjs/typeorm
+npm i bcrypt @types/bcrypt
 
 psql postgres
+
 CREATE DATABASE mydb3;
 CREATE USER myuser WITH PASSWORD 'mypassword';
 GRANT ALL PRIVILEGES ON DATABASE mydb3 TO myuser;

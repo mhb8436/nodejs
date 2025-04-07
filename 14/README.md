@@ -2,6 +2,32 @@
 
 이 프로젝트는 NestJS를 사용한 마이크로서비스 아키텍처 예제입니다.
 
+## 설치
+
+```bash
+nest new api-gateway
+nest new user-service
+nest new post-service
+nest new auth-servicce
+
+
+# NestJS 핵심 패키지
+npm install @nestjs/common @nestjs/core @nestjs/platform-express @nestjs/config @nestjs/microservices
+
+# 인증 관련 패키지
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+
+# 데이터베이스 관련 패키지
+npm install @nestjs/typeorm typeorm pg
+
+# 유틸리티 패키지
+npm install class-transformer class-validator reflect-metadata rxjs
+
+# API 문서화
+npm install @nestjs/swagger
+
+```
+
 ## 프로젝트 구조
 
 ```
