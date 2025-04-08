@@ -1,0 +1,10 @@
+{
+  "name": "typescript-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TypeScript examples",
+  "main": "ch01_34.ts",
+  "scripts": {
+    "start": "ts-node ch01_34.ts"
+  }
+}
