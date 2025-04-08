@@ -1,125 +1,81 @@
-require("dotenv").config();
-const path = require("path");
+// moment.js와 dayjs 예제
+// npm install moment dayjs
+const moment = require("moment");
 
-// 1. 기본 환경 변수 사용
-console.log("=== 기본 환경 변수 사용 ===");
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("PORT:", process.env.PORT);
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
+console.log("\n=== moment.js 예제 ===");
 
-// 2. 환경별 설정 파일
-const config = {
-  development: {
-    port: 3000,
-    database: {
-      host: "localhost",
-      port: 27017,
-      name: "dev_db",
-    },
-    logging: {
-      level: "debug",
-      file: "dev.log",
-    },
-  },
-  production: {
-    port: process.env.PORT || 80,
-    database: {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      name: process.env.DB_NAME,
-    },
-    logging: {
-      level: "error",
-      file: "prod.log",
-    },
-  },
-};
+// 1. 현재 시간
+const nowMoment = moment();
+console.log("현재 시간 (moment):", nowMoment.format("YYYY-MM-DD HH:mm:ss"));
 
-// 3. 현재 환경 설정 가져오기
-const currentEnv = process.env.NODE_ENV || "development";
-const currentConfig = config[currentEnv];
+// 2. 날짜 포맷팅
+const dateMoment = moment("2024-03-20");
+console.log("날짜 포맷팅 (moment):", dateMoment.format("YYYY년 MM월 DD일"));
 
-console.log("\n=== 환경별 설정 ===");
-console.log("현재 환경:", currentEnv);
-console.log("설정:", currentConfig);
+// 3. 시간 더하기/빼기
+const nextWeekMoment = moment().add(7, "days");
+console.log("일주일 후 (moment):", nextWeekMoment.format("YYYY-MM-DD"));
 
-// 4. 환경 변수 검증
-function validateConfig() {
-  const requiredEnvVars = ["DB_HOST", "DB_PORT", "DB_NAME"];
-  const missingVars = requiredEnvVars.filter(
-    (varName) => !process.env[varName]
-  );
+// 4. 시간 차이 계산
+const startMoment = moment("2024-01-01");
+const endMoment = moment("2024-12-31");
+const diffDays = endMoment.diff(startMoment, "days");
+console.log("날짜 차이 (moment):", diffDays, "일");
 
-  if (missingVars.length > 0) {
-    throw new Error(
-      `필수 환경 변수가 설정되지 않았습니다: ${missingVars.join(", ")}`
-    );
-  }
+// 5. 요일 확인
+console.log("오늘 요일 (moment):", moment().format("dddd"));
+
+console.log("\n=== dayjs 예제 ===");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko"); // 한국어 로케일 추가
+dayjs.locale("ko");
+
+// 1. 현재 시간
+const nowDayjs = dayjs();
+console.log("현재 시간 (dayjs):", nowDayjs.format("YYYY-MM-DD HH:mm:ss"));
+
+// 2. 날짜 포맷팅
+const dateDayjs = dayjs("2024-03-20");
+console.log("날짜 포맷팅 (dayjs):", dateDayjs.format("YYYY년 MM월 DD일"));
+
+// 3. 시간 더하기/빼기
+const nextWeekDayjs = dayjs().add(7, "day");
+console.log("일주일 후 (dayjs):", nextWeekDayjs.format("YYYY-MM-DD"));
+
+// 4. 시간 차이 계산
+const startDayjs = dayjs("2024-01-01");
+const endDayjs = dayjs("2024-12-31");
+const diffDaysDayjs = endDayjs.diff(startDayjs, "day");
+console.log("날짜 차이 (dayjs):", diffDaysDayjs, "일");
+
+// 5. 요일 확인
+console.log("오늘 요일 (dayjs):", dayjs().format("dddd"));
+
+// 6. 상대적 시간 표시
+const relativeTime = dayjs("2024-03-15").fromNow();
+console.log("상대적 시간 (dayjs):", relativeTime);
+
+// 7. 시간대 변환
+const utcTime = dayjs().utc();
+console.log("UTC 시간 (dayjs):", utcTime.format());
+
+// 8. 날짜 유효성 검사
+const isValid = dayjs("2024-13-45").isValid();
+console.log("날짜 유효성 (dayjs):", isValid);
+
+// 9. 날짜 비교
+const isAfter = dayjs("2024-03-20").isAfter("2024-03-19");
+console.log("날짜 비교 (dayjs):", isAfter);
+
+// 10. 날짜 범위 생성
+const start = dayjs("2024-01-01");
+const end = dayjs("2024-01-05");
+const range = [];
+for (
+  let date = start;
+  date.isBefore(end) || date.isSame(end, "day");
+  date = date.add(1, "day")
+) {
+  range.push(date.format("YYYY-MM-DD"));
 }
-
-// 5. 환경 변수 타입 변환
-const configWithTypes = {
-  port: parseInt(process.env.PORT, 10) || 3000,
-  debug: process.env.DEBUG === "true",
-  maxConnections: parseInt(process.env.MAX_CONNECTIONS, 10) || 100,
-  allowedOrigins: process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(",")
-    : ["http://localhost:3000"],
-};
-
-console.log("\n=== 타입 변환된 설정 ===");
-console.log("포트:", configWithTypes.port, typeof configWithTypes.port);
-console.log(
-  "디버그 모드:",
-  configWithTypes.debug,
-  typeof configWithTypes.debug
-);
-console.log(
-  "최대 연결 수:",
-  configWithTypes.maxConnections,
-  typeof configWithTypes.maxConnections
-);
-console.log("허용된 출처:", configWithTypes.allowedOrigins);
-
-// 6. 환경 변수 암호화/복호화
-const crypto = require("crypto");
-
-function encrypt(text, key) {
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(key), iv);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return iv.toString("hex") + ":" + encrypted.toString("hex");
-}
-
-function decrypt(text, key) {
-  const [ivHex, encryptedHex] = text.split(":");
-  const iv = Buffer.from(ivHex, "hex");
-  const encrypted = Buffer.from(encryptedHex, "hex");
-  const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), iv);
-  let decrypted = decipher.update(encrypted);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
-  return decrypted.toString();
-}
-
-// 테스트
-const secretKey =
-  process.env.ENCRYPTION_KEY || "your-secret-key-32-chars-long!!";
-const sensitiveData = "my-secret-password";
-const encrypted = encrypt(sensitiveData, secretKey);
-const decrypted = decrypt(encrypted, secretKey);
-
-console.log("\n=== 환경 변수 암호화 ===");
-console.log("원본:", sensitiveData);
-console.log("암호화:", encrypted);
-console.log("복호화:", decrypted);
-
-// 7. 환경 변수 파일 자동 생성
-const fs = require("fs");
-const envExamplePath = path.join(__dirname, ".env.example");
-const envPath = path.join(__dirname, ".env");
-
-if (!fs.existsSync(envPath) && fs.existsSync(envExamplePath)) {
-  fs.copyFileSync(envExamplePath, envPath);
-  console.log("\n.env 파일이 생성되었습니다. 환경 변수를 설정해주세요.");
-}
+console.log("날짜 범위 (dayjs):", range);

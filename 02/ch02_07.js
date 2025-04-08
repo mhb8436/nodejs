@@ -1,23 +1,3 @@
-let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-for (var i = 11; i < 21; i++) {
-  data.push(i);
-}
-console.log(data);
-
-const data2 = data.map((x) => x * 2);
-console.log(data2);
-
-const data3 = data.filter((x) => x % 2 == 0);
-console.log(data3);
-
-data.forEach((x) => {
-  if (x >= 5 && x <= 15) {
-    console.log(x);
-  }
-});
-
-// 프로세스 정보
 console.log("Node.js 버전:", process.version);
 console.log("플랫폼:", process.platform);
 console.log("아키텍처:", process.arch);
@@ -37,6 +17,23 @@ process.on("SIGINT", () => {
 console.log("\n메모리 사용량:");
 console.log("힙 사용량:", process.memoryUsage().heapUsed);
 console.log("힙 전체:", process.memoryUsage().heapTotal);
+const os = require("os");
+
+// 시스템의 전체 메모리 정보
+const totalMemory = os.totalmem();
+const freeMemory = os.freemem();
+console.log("\n시스템 메모리 정보 (MB):");
+console.log(
+  `전체 메모리: ${Math.round((totalMemory / 1024 / 1024) * 100) / 100} MB`
+);
+console.log(
+  `사용 가능한 메모리: ${Math.round((freeMemory / 1024 / 1024) * 100) / 100} MB`
+);
+console.log(
+  `사용 중인 메모리: ${
+    Math.round(((totalMemory - freeMemory) / 1024 / 1024) * 100) / 100
+  } MB`
+);
 
 // 프로세스 종료
 setTimeout(() => {
