@@ -1,6 +1,8 @@
 // moment.js와 dayjs 예제
-// npm install moment dayjs
 const moment = require("moment");
+const dayjs = require("dayjs");
+require("dayjs/locale/ko"); // 한국어 로케일 추가
+dayjs.locale("ko");
 
 console.log("\n=== moment.js 예제 ===");
 
@@ -26,9 +28,6 @@ console.log("날짜 차이 (moment):", diffDays, "일");
 console.log("오늘 요일 (moment):", moment().format("dddd"));
 
 console.log("\n=== dayjs 예제 ===");
-const dayjs = require("dayjs");
-require("dayjs/locale/ko"); // 한국어 로케일 추가
-dayjs.locale("ko");
 
 // 1. 현재 시간
 const nowDayjs = dayjs();
