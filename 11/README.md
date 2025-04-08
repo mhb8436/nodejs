@@ -1,56 +1,60 @@
-# Chapter 11: 실전 프로젝트
+# Node.js 인증 예제
 
-이 디렉토리는 Node.js를 사용한 실제 프로젝트 구현 예제를 포함하고 있습니다.
+이 디렉토리에는 Node.js에서 다양한 인증 방식을 구현한 예제들이 포함되어 있습니다.
 
 ## 학습 목표
 
-- 실제 프로젝트 구조 설계
-- 데이터베이스 설계 및 구현
-- API 엔드포인트 설계
-- 프론트엔드 통합
-- 사용자 인증 구현
-- 파일 업로드 처리
-- 실시간 기능 구현
-- 배포 및 운영
+- 기본 인증 (Basic Authentication) 구현
+- API 키 기반 인증 구현
+- JWT(JSON Web Token) 기반 인증 구현
+- 실전 인증 시스템 구현 (Sequelize + JWT)
 
 ## 디렉토리 구조
 
-- **ch11_01/**: 기본 프로젝트 구조
-- **ch11_02/**: 데이터베이스 연동
-- **ch11_03/**: API 구현
-- **ch11_04/**: 프론트엔드 통합
+- `ch11_01/`: 기본 인증 (Basic Authentication) 예제
+
+  - `app.js`: express-basic-auth를 사용한 기본 인증 구현
+  - `package.json`: 필요한 의존성 정의
+
+- `ch11_02/`: API 키 기반 인증 예제
+
+  - `app.js`: API 키 검증 미들웨어 구현
+  - `package.json`: 필요한 의존성 정의
+
+- `ch11_03/`: JWT 기반 인증 예제
+
+  - `app.js`: JWT 토큰 발급 및 검증 구현
+  - `package.json`: 필요한 의존성 정의
+
+- `ch11_04/`: 실전 인증 시스템 예제
+  - `server.js`: 메인 서버 파일
+  - `routes/`: 라우트 정의
+  - `controllers/`: 컨트롤러 로직
+  - `models/`: 데이터베이스 모델
+  - `middleware/`: 인증 미들웨어
+  - `services/`: 비즈니스 로직
+  - `utils/`: 유틸리티 함수
+  - `config/`: 설정 파일
+  - `dao/`: 데이터 접근 객체
 
 ## 사용 방법
 
-1. 이 디렉토리로 이동합니다:
+각 예제 디렉토리로 이동하여 다음 명령어를 실행하세요:
 
-   ```bash
-   cd 11
-   ```
+```bash
+npm install
+npm start
+```
 
-2. 필요한 의존성을 설치합니다:
+## 필수 조건
 
-   ```bash
-   npm install
-   ```
+- Node.js 설치
+- npm 또는 yarn 설치
+- 각 예제별 추가 의존성 설치 필요
 
-3. 프로젝트를 실행합니다:
-   ```bash
-   # ch11_01 디렉토리로 이동
-   cd ch11_01
-   npm start
-   ```
+## 참고 자료
 
-## 사전 준비
-
-- Node.js가 설치되어 있어야 합니다
-- npm이 설치되어 있어야 합니다
-- MongoDB가 설치되어 있어야 합니다
-- Chapter 01-10의 내용을 이해하고 있어야 합니다
-
-## 참고 사항
-
-- 프로젝트는 단계별로 구현됩니다
-- 각 단계는 이전 단계의 기능을 확장합니다
-- 실제 운영 환경을 고려한 설정이 포함되어 있습니다
-- 테스트 코드가 포함되어 있습니다
+- [express-basic-auth 문서](https://github.com/LionC/express-basic-auth)
+- [JWT 공식 문서](https://jwt.io/)
+- [Sequelize 문서](https://sequelize.org/)
+- [Express.js 문서](https://expressjs.com/)

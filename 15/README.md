@@ -29,6 +29,7 @@ npm install reflect-metadata rxjs
 npm install
 
 # Prisma 클라이언트 생성
+npx prisma init
 npx prisma generate
 
 # 데이터베이스 마이그레이션

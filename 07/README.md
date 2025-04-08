@@ -1,69 +1,95 @@
-# Chapter 07: 데이터베이스 관계와 SQL
+# Chapter 07: Express.js 웹 애플리케이션
 
-이 디렉토리는 Node.js에서 데이터베이스 관계와 SQL 쿼리를 다루는 예제 코드를 포함하고 있습니다.
+이 디렉토리는 Express.js를 사용한 웹 애플리케이션 예제를 포함하고 있습니다. SQLite를 데이터베이스로 사용하는 간단한 게시판 애플리케이션을 통해 Express.js의 기본적인 사용법과 웹 애플리케이션 개발 방법을 학습할 수 있습니다.
 
 ## 학습 목표
 
-- 데이터베이스 관계 이해
-- SQL 쿼리 작성
-- JOIN 연산 활용
-- 서브쿼리 사용
-- 트랜잭션 처리
-- 데이터 정규화
-- 인덱스 활용
-- 데이터 무결성 유지
+- Express.js 기본 개념 이해
+- 라우팅 처리
+- 템플릿 엔진 사용 (EJS)
+- 데이터베이스 연동 (SQLite)
+- CRUD 기능 구현
+- 페이지네이션 구현
+- 정적 파일 처리
 
 ## 디렉토리 구조
 
-- **ch07_01.js/sql**: 기본 SELECT 쿼리
-- **ch07_02.js/sql**: JOIN 연산
-- **ch07_03.js/sql**: 서브쿼리
-- **ch07_04.js/sql**: 집계 함수
-- **ch07_05.js/sql**: 트랜잭션
-- **ch07_06/**: 게시판 데이터베이스 구현
-  - Express.js 서버
-  - SQLite 데이터베이스
-  - EJS 템플릿
-  - 정적 파일 서빙
-- **ch07_sol_01.sql**: 연습 문제 해답
-- **relation.xlsx**: 데이터베이스 관계도
+### ch07_01: 게시판 애플리케이션
+
+- **server.js**: Express 서버 설정 및 라우팅
+
+  - 데이터베이스 연결
+  - 라우트 핸들러
+  - CRUD API 구현
+  - 페이지네이션 처리
+
+- **views/**: EJS 템플릿 파일
+
+  - **layouts/**: 공통 레이아웃
+    - header.ejs: 헤더 템플릿
+    - footer.ejs: 푸터 템플릿
+    - nav.ejs: 네비게이션 템플릿
+  - **pages/**: 페이지별 템플릿
+    - home.ejs: 홈페이지
+    - list.ejs: 게시글 목록
+    - detail.ejs: 게시글 상세
+    - write.ejs: 게시글 작성
+    - update.ejs: 게시글 수정
+
+- **public/**: 정적 파일
+
+  - CSS, JavaScript, 이미지 등
+
+- **board.db**: SQLite 데이터베이스 파일
 
 ## 사용 방법
 
 1. 이 디렉토리로 이동합니다:
 
    ```bash
-   cd 07
+   cd 07/ch07_01
    ```
 
-2. 필요한 의존성을 설치합니다:
+2. 필요한 패키지를 설치합니다:
 
    ```bash
    npm install
    ```
 
-3. 예제를 실행합니다:
+3. 서버를 실행합니다:
 
    ```bash
-   # 개별 SQL 예제 실행
-   node ch07_01.js
-   node ch07_02.js
-   # ... 기타 예제
-
-   # 게시판 서버 실행
-   cd ch07_06
-   npm start
+   node server.js
    ```
+
+4. 웹 브라우저에서 다음 주소로 접속합니다:
+   - http://localhost:3000
+
+## 주요 기능
+
+- 게시글 목록 조회 (페이지네이션)
+- 게시글 상세 보기
+- 게시글 작성
+- 게시글 수정
+- 게시글 삭제
+- 조회수 카운트
 
 ## 사전 준비
 
-- Node.js가 설치되어 있어야 합니다
+- Node.js v14 이상이 설치되어 있어야 합니다
 - npm이 설치되어 있어야 합니다
-- Chapter 01-06의 내용을 이해하고 있어야 합니다
+- SQLite가 설치되어 있어야 합니다
 
-## 참고 사항
+## 주의사항
 
-- SQL 쿼리는 데이터베이스에 직접 실행됩니다
-- 트랜잭션을 통해 데이터 일관성을 유지합니다
-- 인덱스를 적절히 사용하여 쿼리 성능을 개선합니다
-- 데이터베이스 관계를 이해하고 적절히 설계합니다
+- 데이터베이스 파일(board.db)이 올바른 위치에 있어야 합니다
+- 포트 3000이 사용 가능해야 합니다
+- SQL 인젝션 방지를 위한 입력값 검증이 필요합니다
+- 에러 처리가 필요합니다
+
+## 참고 자료
+
+- [Express.js 공식 문서](https://expressjs.com/)
+- [EJS 템플릿 엔진](https://ejs.co/)
+- [SQLite3 Node.js 드라이버](https://github.com/mapbox/node-sqlite3)
+- [Node.js SQLite3 문서](https://www.sqlitetutorial.net/sqlite-nodejs/)
