@@ -1,100 +1,61 @@
-// npm install uuid debug fs-extra
-const { v1: uuidv1, v4: uuidv4, v5: uuidv5 } = require("uuid");
-const crypto = require("crypto");
-const debug = require("debug")("app:main");
-const fs = require("fs-extra");
-const path = require("path");
-
-// 1. UUID 사용 사례
-console.log("=== UUID 사용 사례 ===");
-const userId = uuidv4();
-const sessionId = uuidv1();
-const namespaceId = uuidv5(
-  "example.com",
-  "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+// lodash 예제
+// npm i lodash
+const _ = require("lodash");
+// 1. 배열 조작
+console.log("=== 배열 조작 ===");
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+console.log(
+  "짝수만 필터링:",
+  _.filter(numbers, (n) => n % 2 === 0)
 );
+console.log("배열 청크:", _.chunk(numbers, 3));
+console.log("배열 중복 제거:", _.uniq([1, 2, 2, 3, 3, 4, 5]));
+console.log("배열 차집합:", _.difference([1, 2, 3], [2, 3, 4]));
+console.log("배열 교집합:", _.intersection([1, 2, 3], [2, 3, 4]));
 
-console.log("사용자 ID:", userId);
-console.log("세션 ID:", sessionId);
-console.log("네임스페이스 ID:", namespaceId);
+// 2. 객체 조작
+console.log("\n=== 객체 조작 ===");
+const user = {
+  name: "홍길동",
+  age: 30,
+  address: {
+    city: "서울",
+    street: "강남구",
+  },
+  hobbies: ["독서", "운동"],
+};
 
-// 2. Crypto 사용 사례
-console.log("\n=== Crypto 사용 사례 ===");
-const userPassword = "mySecurePassword123";
-const passwordSalt = crypto.randomBytes(16).toString("hex");
-const passwordHash = crypto
-  .pbkdf2Sync(userPassword, passwordSalt, 100000, 64, "sha512")
-  .toString("hex");
+console.log("객체 복사:", _.cloneDeep(user));
+console.log("객체 병합:", _.merge({}, user, { age: 31 }));
+console.log("객체 키 추출:", _.keys(user));
+console.log("객체 값 추출:", _.values(user));
 
-console.log("비밀번호 해시:", passwordHash);
-console.log("솔트:", passwordSalt);
+// 3. 문자열 조작
+console.log("\n=== 문자열 조작 ===");
+const text = "  Hello, World!  ";
+console.log("문자열 자르기:", _.trim(text));
+console.log("문자열 반복:", _.repeat("*", 5));
+console.log("문자열 시작 확인:", _.startsWith(text, "Hello"));
+console.log("문자열 끝 확인:", _.endsWith(text, "World!"));
 
-// 3. Debug 사용 사례
-console.log("\n=== Debug 사용 사례 ===");
-debug("디버그 메시지입니다");
-debug("사용자 정보: %O", { id: userId, name: "홍길동" });
+// 4. 숫자 조작
+console.log("\n=== 숫자 조작 ===");
+console.log("숫자 범위:", _.range(0, 5));
+console.log("숫자 반올림:", _.round(3.14159, 2));
+console.log("숫자 클램프:", _.clamp(10, 0, 5));
+console.log("숫자 랜덤:", _.random(1, 10));
 
-// 4. fs-extra 사용 사례
-console.log("\n=== fs-extra 사용 사례 ===");
-const tempDir = path.join(__dirname, "temp");
-const dataDir = path.join(__dirname, "data");
+// 5. 함수
+console.log("\n=== 함수형 프로그래밍 ===");
+const users = [
+  { id: 1, name: "홍길동", age: 30 },
+  { id: 2, name: "김철수", age: 25 },
+  { id: 3, name: "이영희", age: 35 },
+];
 
-async function fsExtraExamples() {
-  try {
-    // 디렉토리 생성
-    await fs.ensureDir(tempDir);
-    await fs.ensureDir(dataDir);
-    console.log("디렉토리 생성 완료");
-
-    // 파일 복사
-    const sourceFile = path.join(tempDir, "source.txt");
-    const targetFile = path.join(dataDir, "target.txt");
-    await fs.writeFile(sourceFile, "원본 파일 내용");
-    await fs.copy(sourceFile, targetFile);
-    console.log("파일 복사 완료");
-
-    // JSON 파일 읽기/쓰기
-    const jsonFile = path.join(dataDir, "config.json");
-    const config = {
-      appName: "MyApp",
-      version: "1.0.0",
-      settings: {
-        debug: true,
-        port: 3000,
-      },
-    };
-    await fs.writeJson(jsonFile, config, { spaces: 2 });
-    const readConfig = await fs.readJson(jsonFile);
-    console.log("JSON 파일 읽기/쓰기 완료:", readConfig);
-
-    // 파일 이동
-    const moveSource = path.join(tempDir, "move.txt");
-    const moveTarget = path.join(dataDir, "moved.txt");
-    await fs.writeFile(moveSource, "이동할 파일 내용");
-    await fs.move(moveSource, moveTarget);
-    console.log("파일 이동 완료");
-
-    // 디렉토리 내용 읽기
-    const files = await fs.readdir(dataDir);
-    console.log("디렉토리 내용:", files);
-
-    // 파일 존재 여부 확인
-    const exists = await fs.pathExists(jsonFile);
-    console.log("파일 존재 여부:", exists);
-
-    // 파일 삭제
-    await fs.remove(targetFile);
-    await fs.remove(moveTarget);
-    console.log("파일 삭제 완료");
-
-    // 디렉토리 삭제
-    await fs.remove(tempDir);
-    await fs.remove(dataDir);
-    console.log("디렉토리 삭제 완료");
-  } catch (error) {
-    console.error("fs-extra 작업 중 오류 발생:", error);
-  }
-}
-
-// fs-extra 예제 실행
-fsExtraExamples();
+console.log("사용자 나이 평균:", _.meanBy(users, "age"));
+console.log("나이순 정렬:", _.sortBy(users, "age"));
+console.log(
+  "그룹화:",
+  _.groupBy(users, (user) => (user.age > 30 ? "senior" : "junior"))
+);

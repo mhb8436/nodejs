@@ -17,33 +17,3 @@ console.log("\n=== ES 모듈 시스템 ===");
 console.log("sum(1, 2, 3, 4, 5):", sum(1, 2, 3, 4, 5));
 console.log("multiply(2, 3, 4):", multiply(2, 3, 4));
 console.log("formatDate(new Date()):", formatDate(new Date()));
-
-// 3. 모듈 캐싱
-const counter1 = require("./modules/counter");
-const counter2 = require("./modules/counter");
-
-console.log("\n=== 모듈 캐싱 ===");
-console.log("counter1.getCount():", counter1.getCount());
-counter1.increment();
-console.log(
-  "counter1.increment() 후 counter2.getCount():",
-  counter2.getCount()
-);
-
-// 4. 모듈 경로 해석
-const path = require("path");
-console.log("\n=== 모듈 경로 해석 ===");
-console.log("__dirname:", __dirname);
-console.log("__filename:", __filename);
-console.log(
-  'path.join(__dirname, "modules"):',
-  path.join(__dirname, "modules")
-);
-
-// 5. 모듈 내보내기 방식
-const { default: defaultExport } = require("./modules/export-examples");
-const { namedExport } = require("./modules/export-examples");
-
-console.log("\n=== 모듈 내보내기 방식 ===");
-console.log("defaultExport:", defaultExport);
-console.log("namedExport:", namedExport);
