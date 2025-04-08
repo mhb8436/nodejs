@@ -60,6 +60,7 @@
 
    ```bash
    npm install -g typescript
+   npx tsc --init
    cd 01 && tsc ch01_34.ts
    ```
 
@@ -81,6 +82,7 @@
 - TypeScript 예제를 실행하기 위해서는 다음 패키지가 필요합니다:
   ```bash
   npm install -g typescript ts-node
+  npx tsc --init
   ```
 - 프로그래밍의 기본 개념을 이해하고 있어야 합니다
 

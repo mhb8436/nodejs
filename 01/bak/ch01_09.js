@@ -7,12 +7,12 @@ if (date.getHours() < 12) {
   console.log(`오후입니다 : ${date.getHours()}`);
 }
 
-// 삼항 연산자
+// 1. 삼항 연산자
 const hour = date.getHours();
 const timeOfDay = hour < 12 ? "오전" : "오후";
 console.log(`현재는 ${timeOfDay}입니다.`);
 
-// 중첩 조건문
+// 2. 중첩된 조건문
 const temperature = 25;
 if (temperature > 30) {
   console.log("더운 날씨입니다.");
@@ -24,7 +24,7 @@ if (temperature > 30) {
   console.log("추운 날씨입니다.");
 }
 
-// 논리 연산자를 사용한 조건문
+// 3. 논리 연산자를 사용한 조건문
 const age = 20;
 const hasLicense = true;
 
@@ -36,7 +36,7 @@ if (age >= 18 && hasLicense) {
   console.log("운전이 불가능합니다.");
 }
 
-// switch 문
+// 4. switch 문
 const day = date.getDay();
 switch (day) {
   case 0:
@@ -64,12 +64,12 @@ switch (day) {
     console.log("알 수 없는 요일");
 }
 
-// 짧은 조건문 (Short-circuit evaluation)
+// 5. 짧은 조건문 (Short-circuit evaluation)
 const name = "";
 const displayName = name || "익명";
 console.log(`환영합니다, ${displayName}님!`);
 
-// 복합 조건문
+// 6. 복합 조건문
 const score = 85;
 const attendance = 90;
 
@@ -83,17 +83,17 @@ if (score >= 90 && attendance >= 90) {
   console.log("F");
 }
 
-// nullish 병합 연산자
+// 7. nullish 병합 연산자
 const userInput = null;
 const defaultValue = "기본값";
 const result = userInput ?? defaultValue;
 console.log(`결과: ${result}`);
 
-// 조건부 실행
+// 8. 조건부 실행
 const isLoggedIn = true;
 isLoggedIn && console.log("로그인 상태입니다.");
 
-// 다중 조건 검사
+// 9. 다중 조건 검사
 const fruit = "사과";
 if (fruit === "사과" || fruit === "배" || fruit === "복숭아") {
   console.log("과일입니다.");
@@ -101,8 +101,7 @@ if (fruit === "사과" || fruit === "배" || fruit === "복숭아") {
   console.log("과일이 아닙니다.");
 }
 
-// 삼항 연산자를 이용한 기본값 설정
-let test;
-console.log(typeof test);
-test = typeof test != "undefined" ? test : "initial";
-console.log(test);
+// 10. 조건문을 사용한 배열 필터링
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const evenNumbers = numbers.filter((num) => num % 2 === 0);
+console.log("짝수:", evenNumbers);

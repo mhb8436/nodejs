@@ -1,28 +1,53 @@
-//숫자 사칙연산
-console.log(23);
-console.log(23 + 45);
-console.log(23 * 45);
-console.log(2 + 3 * 5);
-console.log(10 % 5);
-console.log(10 / 5);
-//문자자료형 및 이스케이프
-console.log('안녕하세요')
-console.log('this is "string"')
-console.log("this is \"string\" ");
-console.log("this is \n  string ");
-console.log("this is \t string");
-console.log("this is \\ string");
-//문자열 더하기
-console.log("hello" + " " + "javascript")
-console.log("hello"[1]);
-//템플릿 문자열
-console.log(`52 + 45 = ${52 + 45}`);
-//비교 연산자
-console.log( 52 > 52 );
-console.log( 45 == 52 );
-console.log( 45 != 52 );
-console.log( 52 >= 52 );
-//논리 연산자
-console.log( 52 >= 52 && 52 > 52 );
-console.log( 52 >= 52 || 52 > 52 );
+// 변수 선언과 할당
+let pi;
+console.log(pi);
+pi = 3.141592;
+console.log(pi);
 
+let pi2 = 3.141592;
+console.log(pi2);
+
+// 변수 사용 예제
+let radius = 12;
+console.log(`넓이 : ${pi * radius * radius}`);
+console.log(`둘레 : ${pi * 2 * radius}`);
+
+// 복합 할당 연산자
+let output = "hello";
+output += "world";
+console.log(output);
+
+// 증감 연산자
+let num = 0;
+num++;
+console.log(`num++ : ${num}`);
+num--;
+console.log(`num-- : ${num}`);
+
+// 전위/후위 증감 연산자
+console.log(`num++ : ${num++}`); // 후위: 현재 값 반환 후 증가
+console.log(`num-- : ${num--}`); // 후위: 현재 값 반환 후 감소
+
+console.log(`++num : ${++num}`); // 전위: 증가 후 값 반환
+console.log(`--num : ${--num}`); // 전위: 감소 후 값 반환
+
+// 타입 변환
+console.log(String(52));
+console.log(typeof 52);
+console.log(typeof String(52));
+
+console.log(Number("45"));
+console.log(Number(true));
+console.log(Number("hello"));
+
+console.log(isNaN(Number("hello")));
+
+console.log(Boolean(0));
+console.log(Boolean(NaN));
+console.log(Boolean(1));
+console.log(Boolean("Hello"));
+
+// 자동 타입 변환
+console.log(25 + 125); // 숫자 + 숫자
+console.log("25" + 125); // 문자열 + 숫자
+console.log("25" - 125); // 문자열 - 숫자
