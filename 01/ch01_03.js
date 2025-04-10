@@ -23,3 +23,10 @@ console.log(`after : ${test}`);
 
 const abc = "abc";
 // const def;  // 에러 발생: const는 초기값 필요
+
+// 블록 스코프
+{
+  const x = "block";
+  console.log(x); // block
+}
+console.log(x); // 에러 발생: x는 블록 스코프 내에서만 접근 가능

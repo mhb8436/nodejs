@@ -53,3 +53,23 @@ let p = new PersonInfo("lee", 12, "seoul", ["rc", "star"]);
 console.log(`before age : ${p.getAge()}`);
 p.addAge(10);
 console.log(`after age : ${p.getAge()}`);
+
+// 상속
+class Employee extends PersonInfo {
+  constructor(name, age, address, hobby, salary) {
+    super(name, age, address, hobby);
+    this.salary = salary;
+  }
+}
+
+let e = new Employee("kim", 20, "incheon", ["soccer", "game"], 1000);
+console.log(e);
+
+// 정적 메서드
+class MathUtils {
+  static add(a, b) {
+    return a + b;
+  }
+}
+
+console.log(MathUtils.add(10, 20));
