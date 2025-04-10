@@ -27,9 +27,14 @@ export class UserService {
   }
 }
 
+import { UserService as UserService2, User as User2 } from "./ch01_15";
+
 // 실행 예시
-const userService = new UserService();
-userService.addUser({ name: "홍길동", age: 25 });
+const userService = new UserService2();
+// User2는 인터페이스이므로 직접 인스턴스화할 수 없음
+// 대신 User2 인터페이스를 만족하는 객체 리터럴 사용
+const user: User2 = { name: "홍길동", age: 25 };
+userService.addUser(user);
 console.log("Users:", userService.getUsers());
 
 // 2. 네임스페이스
