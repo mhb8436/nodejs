@@ -6,5 +6,8 @@
   "main": "ch01_34.ts",
   "scripts": {
     "start": "ts-node ch01_34.ts"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2"
   }
 }
