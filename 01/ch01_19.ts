@@ -25,6 +25,13 @@ class ExampleClass {
   constructor(public name: string) {}
 }
 
+// 클래스 데코레이터 실행 예시
+const exampleClass = new ExampleClass("홍길동");
+console.log("클래스 데코레이터 테스트:");
+console.log("Name:", exampleClass.name);
+console.log("New property:", (exampleClass as any).newProperty);
+console.log("Hello:", (exampleClass as any).hello);
+
 // 2. 메서드 데코레이터
 function log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
@@ -46,6 +53,11 @@ class ExampleMethod {
     return `안녕하세요, ${name}!`;
   }
 }
+
+// 메서드 데코레이터 실행 예시
+const exampleMethod = new ExampleMethod();
+console.log("\n메서드 데코레이터 테스트:");
+console.log(exampleMethod.greet("철수"));
 
 // 3. 프로퍼티 데코레이터
 function format() {
@@ -75,22 +87,7 @@ class ExampleProperty {
   name: string = "홍길동";
 }
 
-// 실행 예시
-console.log("=== TypeScript 데코레이터 예제 ===");
-
-// 클래스 데코레이터 테스트
-const exampleClass = new ExampleClass("홍길동");
-console.log("클래스 데코레이터 테스트:");
-console.log("Name:", exampleClass.name);
-console.log("New property:", (exampleClass as any).newProperty);
-console.log("Hello:", (exampleClass as any).hello);
-
-// 메서드 데코레이터 테스트
-const exampleMethod = new ExampleMethod();
-console.log("\n메서드 데코레이터 테스트:");
-console.log(exampleMethod.greet("철수"));
-
-// 프로퍼티 데코레이터 테스트
+// 프로퍼티 데코레이터 실행 예시
 const exampleProperty = new ExampleProperty();
 console.log("\n프로퍼티 데코레이터 테스트:");
 console.log("Original name:", exampleProperty.name);
