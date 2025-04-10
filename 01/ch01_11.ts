@@ -14,10 +14,19 @@
 
 // 1. 기본 타입 선언
 let isDone: boolean = false;
+console.log("Boolean:", isDone);
+
 let decimal: number = 6;
+console.log("Number:", decimal);
+
 let color: string = "blue";
+console.log("String:", color);
+
 let list: number[] = [1, 2, 3];
+console.log("Array:", list);
+
 let tuple: [string, number] = ["hello", 10];
+console.log("Tuple:", tuple);
 
 // 2. 열거형 (Enum)
 enum Color {
@@ -26,16 +35,19 @@ enum Color {
   Blue,
 }
 let favoriteColor: Color = Color.Blue;
+console.log("Enum:", favoriteColor);
 
 // 3. Any 타입
 let notSure: any = 4;
 notSure = "maybe a string";
 notSure = false;
+console.log("Any:", notSure);
 
 // 4. Void 타입
 function warnUser(): void {
   console.log("This is a warning message");
 }
+warnUser();
 
 // 5. Never 타입
 function error(message: string): never {
@@ -49,23 +61,21 @@ function infiniteLoop(): never {
 
 // 6. Null과 Undefined
 let u: undefined = undefined;
+console.log("Undefined:", u);
+
 let n: null = null;
+console.log("Null:", n);
 
 // 7. 타입 단언
 let someValue: any = "this is a string";
 let strLength: number = (someValue as string).length;
+console.log("String Length:", strLength);
 
 // 8. 유니온 타입
 let unionType: string | number = "hello";
+console.log("Union Type (string):", unionType);
 unionType = 42;
+console.log("Union Type (number):", unionType);
 
 // 실행 예시
 console.log("=== TypeScript 기본 타입 예제 ===");
-console.log("Boolean:", isDone);
-console.log("Number:", decimal);
-console.log("String:", color);
-console.log("Array:", list);
-console.log("Tuple:", tuple);
-console.log("Enum:", favoriteColor);
-console.log("Any:", notSure);
-warnUser();

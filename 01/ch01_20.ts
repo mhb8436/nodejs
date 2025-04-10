@@ -14,6 +14,11 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// 실행 예시
+console.log("=== Promise 기본 예제 ===");
+console.log("시작");
+delay(1000).then(() => console.log("1초 후 실행"));
+
 // 2. Promise를 사용한 비동기 함수
 function fetchUser(id: number): Promise<{ id: number; name: string }> {
   return new Promise((resolve, reject) => {
@@ -27,6 +32,12 @@ function fetchUser(id: number): Promise<{ id: number; name: string }> {
   });
 }
 
+// 실행 예시
+console.log("\n=== Promise 비동기 함수 예제 ===");
+fetchUser(1)
+  .then((user) => console.log("사용자 정보:", user))
+  .catch((error) => console.error("에러:", error));
+
 // 3. async/await 사용
 async function getUser(id: number): Promise<void> {
   try {
@@ -37,6 +48,11 @@ async function getUser(id: number): Promise<void> {
     console.error("에러:", error);
   }
 }
+
+// 실행 예시
+console.log("\n=== async/await 예제 ===");
+getUser(1);
+getUser(-1);
 
 // 4. Promise.all 사용
 async function fetchMultipleUsers(ids: number[]): Promise<void> {
@@ -49,6 +65,10 @@ async function fetchMultipleUsers(ids: number[]): Promise<void> {
   }
 }
 
+// 실행 예시
+console.log("\n=== Promise.all 예제 ===");
+fetchMultipleUsers([1, 2, 3]);
+
 // 5. Promise.race 사용
 async function raceExample(): Promise<void> {
   const fastPromise = delay(1000).then(() => "빠른 작업 완료");
@@ -57,6 +77,10 @@ async function raceExample(): Promise<void> {
   const result = await Promise.race([fastPromise, slowPromise]);
   console.log("경주 결과:", result);
 }
+
+// 실행 예시
+console.log("\n=== Promise.race 예제 ===");
+raceExample();
 
 // 6. Promise 체이닝
 function processUser(id: number): Promise<string> {
@@ -76,23 +100,7 @@ function processUser(id: number): Promise<string> {
 }
 
 // 실행 예시
-console.log("=== TypeScript 비동기 프로그래밍 예제 ===");
-
-// 기본 Promise 사용
-console.log("시작");
-delay(1000).then(() => console.log("1초 후 실행"));
-
-// async/await 사용
-getUser(1);
-getUser(-1);
-
-// Promise.all 사용
-fetchMultipleUsers([1, 2, 3]);
-
-// Promise.race 사용
-raceExample();
-
-// Promise 체이닝 사용
+console.log("\n=== Promise 체이닝 예제 ===");
 processUser(1)
   .then((result) => console.log("최종 결과:", result))
   .catch((error) => console.error("최종 에러:", error));

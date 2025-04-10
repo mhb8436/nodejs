@@ -30,6 +30,9 @@ class Animal {
     return `이름: ${this.name}, 나이: ${this.age}`;
   }
 }
+const animal = new Animal("동물", 5);
+console.log("Animal info:", animal.getInfo());
+animal.move(10);
 
 // 2. 상속
 class Dog extends Animal {
@@ -48,6 +51,10 @@ class Dog extends Animal {
     return `${super.getInfo()}, 품종: ${this.breed}`;
   }
 }
+const dog = new Dog("멍멍이", 3, "골든 리트리버");
+console.log("Dog info:", dog.getInfo());
+dog.bark();
+dog.move(20);
 
 // 3. 추상 클래스
 abstract class AShape {
@@ -78,6 +85,9 @@ class Circle extends AShape {
     return 2 * Math.PI * this.radius;
   }
 }
+const circle = new Circle("빨간색", 5);
+console.log("Circle area:", circle.getArea());
+console.log("Circle perimeter:", circle.getPerimeter());
 
 // 5. 인터페이스 구현
 interface Flyable {
@@ -96,6 +106,9 @@ class Bird extends Animal implements Flyable {
     console.log(`${this.name} is flying with wingspan ${this.wingspan}m.`);
   }
 }
+const bird = new Bird("참새", 2, 0.5);
+console.log("Bird info:", bird.getInfo());
+bird.fly();
 
 // 6. 정적 프로퍼티와 메서드
 class MathUtil {
@@ -105,6 +118,8 @@ class MathUtil {
     return this.PI * radius * radius;
   }
 }
+console.log("PI:", MathUtil.PI);
+console.log("Circle area:", MathUtil.calculateCircleArea(5));
 
 // 7. getter/setter
 class Person {
@@ -121,36 +136,9 @@ class Person {
     this._name = value;
   }
 }
-
-// 실행 예시
-console.log("=== TypeScript 클래스와 상속 예제 ===");
-
-// Animal 클래스 사용
-const animal = new Animal("동물", 5);
-console.log("Animal info:", animal.getInfo());
-animal.move(10);
-
-// Dog 클래스 사용
-const dog = new Dog("멍멍이", 3, "골든 리트리버");
-console.log("Dog info:", dog.getInfo());
-dog.bark();
-dog.move(20);
-
-// Circle 클래스 사용
-const circle = new Circle("빨간색", 5);
-console.log("Circle area:", circle.getArea());
-console.log("Circle perimeter:", circle.getPerimeter());
-
-// Bird 클래스 사용
-const bird = new Bird("참새", 2, 0.5);
-console.log("Bird info:", bird.getInfo());
-bird.fly();
-
-// MathUtil 클래스 사용
-console.log("PI:", MathUtil.PI);
-console.log("Circle area:", MathUtil.calculateCircleArea(5));
-
-// Person 클래스 사용
 const person = new Person();
 person.name = "홍길동";
 console.log("Person name:", person.name);
+
+// 실행 예시
+console.log("=== TypeScript 클래스와 상속 예제 ===");
