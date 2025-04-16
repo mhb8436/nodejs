@@ -1,0 +1,10 @@
+{
+  "name": "nodejs-tutorial",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Node.js tutorial project",
+  "main": "ch04_02.js",
+  "scripts": {
+    "start": "node ch04_02.js"
+  }
+}

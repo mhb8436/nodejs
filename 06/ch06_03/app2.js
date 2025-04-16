@@ -6,6 +6,22 @@ const Database = require("better-sqlite3");
 // 데이터베이스 파일 생성/연결
 const db = new Database("posts.db");
 
+// 데이터베이스 테이블 생성
+db.exec(`
+  CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    postId INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY(postId) REFERENCES posts(id) ON DELETE CASCADE
+  );
+`);
+
 // GraphQL 스키마 정의
 const schema = buildSchema(`
   type Post {
@@ -14,20 +30,34 @@ const schema = buildSchema(`
     content: String!
   }
 
+  type Comment {
+    id: ID!
+    postId: ID!
+    content: String!
+  }
+
   input PostInput {
-    title: String
-    content: String
+    title: String!
+    content: String!
+  }
+
+  input CommentInput {
+    postId: ID!
+    content: String!
   }
 
   type Query {
     getPosts: [Post]
     getPost(id: ID!): Post
+    getComments(postId: ID!): [Comment]
   }
 
   type Mutation {
     createPost(input: PostInput): Post
     updatePost(id: ID!, input: PostInput): Post
     deletePost(id: ID!): String
+    createComment(input: CommentInput): Comment
+    deleteComment(id: ID!): String
   }
 `);
 
@@ -43,6 +73,11 @@ const root = {
     return stmt.get(id);
   },
 
+  getComments: ({ postId }) => {
+    const stmt = db.prepare("SELECT * FROM comments WHERE postId = ?");
+    return stmt.all(postId);
+  },
+
   createPost: ({ input }) => {
     const stmt = db.prepare("INSERT INTO posts (title, content) VALUES (?, ?)");
     const info = stmt.run(input.title, input.content);
@@ -50,22 +85,13 @@ const root = {
   },
 
   updatePost: ({ id, input }) => {
-    // 기존 데이터 조회
-    const getStmt = db.prepare("SELECT * FROM posts WHERE id = ?");
-    const existingPost = getStmt.get(id);
-    if (!existingPost) throw new Error("Post not found");
-
-    // 업데이트할 값 결정 (입력된 값이 있으면 사용, 없으면 기존 값 사용)
-    const title = input.title || existingPost.title;
-    const content = input.content || existingPost.content;
-
     const stmt = db.prepare(
       "UPDATE posts SET title = ?, content = ? WHERE id = ?"
     );
-    const info = stmt.run(title, content, id);
+    const info = stmt.run(input.title, input.content, id);
     if (info.changes === 0) throw new Error("Post not found");
 
-    return { id, title, content };
+    return { id, ...input };
   },
 
   deletePost: ({ id }) => {
@@ -74,6 +100,22 @@ const root = {
     if (info.changes === 0) throw new Error("Post not found");
 
     return `Post with ID ${id} deleted`;
+  },
+
+  createComment: ({ input }) => {
+    const stmt = db.prepare(
+      "INSERT INTO comments (postId, content) VALUES (?, ?)"
+    );
+    const info = stmt.run(input.postId, input.content);
+    return { id: info.lastInsertRowid, ...input };
+  },
+
+  deleteComment: ({ id }) => {
+    const stmt = db.prepare("DELETE FROM comments WHERE id = ?");
+    const info = stmt.run(id);
+    if (info.changes === 0) throw new Error("Comment not found");
+
+    return `Comment with ID ${id} deleted`;
   },
 };
 

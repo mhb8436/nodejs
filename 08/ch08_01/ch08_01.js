@@ -1,7 +1,7 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "sample.sqlite",
+  storage: "sample.db",
 });
 
 // console.log(sequelize);
@@ -53,17 +53,3 @@ const User = sequelize.define("User", {
   });
   console.log(`user deleted_user => ${JSON.stringify(deleted_user)}`);
 })();
-
-// const Post = sequelize.define('Post', {
-//     title: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     content: {
-//         type: DataTypes.TEXT,
-//         allowNull: false
-//     }
-// });
-
-// User.hasMany(Post); // 1:N 관계 설정
-// Post.belongsTo(User); // N:1 관계 설정
