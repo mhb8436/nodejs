@@ -48,33 +48,33 @@ const employee: EmployeeWithPerson = {
 console.log("Employee:", employee); // 출력: Employee: { age: 30, id: 1, department: '개발팀' }
 
 // 3. 타입 가드
-interface ABird {
+interface BirdType {
   fly(): void;
   layEggs(): void;
 }
 
-interface AFish {
+interface FishType {
   swim(): void;
   layEggs(): void;
 }
 
-function isFish(pet: ABird | AFish): pet is AFish {
-  return (pet as AFish).swim !== undefined;
+function isFish(pet: BirdType | FishType): pet is FishType {
+  return (pet as FishType).swim !== undefined;
 }
 
 // 타입 가드 실행 예시
 console.log("\n=== 타입 가드 예시 ===");
-const fish: AFish = {
+const fish: FishType = {
   swim: () => console.log("수영 중..."),
   layEggs: () => console.log("알을 낳는 중..."),
 };
 
-const flyingBird: ABird = {
+const flyingBird: BirdType = {
   fly: () => console.log("날아가는 중..."),
   layEggs: () => console.log("알을 낳는 중..."),
 };
 
-function move(pet: ABird | AFish): void {
+function move(pet: BirdType | FishType): void {
   if (isFish(pet)) {
     pet.swim();
   } else {

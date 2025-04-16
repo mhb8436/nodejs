@@ -57,7 +57,7 @@ dog.bark();
 dog.move(20);
 
 // 3. 추상 클래스
-abstract class AShape {
+abstract class ShapeType {
   protected color: string;
 
   constructor(color: string) {
@@ -69,7 +69,7 @@ abstract class AShape {
 }
 
 // 4. 추상 클래스 구현
-class Circle extends AShape {
+class Circle extends ShapeType {
   private radius: number;
 
   constructor(color: string, radius: number) {

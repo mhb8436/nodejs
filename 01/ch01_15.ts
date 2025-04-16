@@ -27,37 +27,49 @@ export class UserService {
   }
 }
 
+import { UserService as UserService2, User as User2 } from "./ch01_15";
+
 // 실행 예시
-const userService = new UserService();
-userService.addUser({ name: "홍길동", age: 25 });
+const userService = new UserService2();
+// User2는 인터페이스이므로 직접 인스턴스화할 수 없음
+// 대신 User2 인터페이스를 만족하는 객체 리터럴 사용
+const user: User2 = { name: "홍길동", age: 25 };
+userService.addUser(user);
 console.log("Users:", userService.getUsers());
 
 // 2. 네임스페이스
-namespace Validation {
-  export interface StringValidator {
-    isValid(s: string): boolean;
+namespace Calculator {
+  export interface Operation {
+    calculate(a: number, b: number): number;
   }
 
-  export class LettersOnlyValidator implements StringValidator {
-    isValid(s: string): boolean {
-      return /^[A-Za-z]+$/.test(s);
+  export class Add implements Operation {
+    calculate(a: number, b: number): number {
+      return a + b;
     }
   }
 
-  export class ZipCodeValidator implements StringValidator {
-    isValid(s: string): boolean {
-      return /^\d{5}(-\d{4})?$/.test(s);
+  export class Subtract implements Operation {
+    calculate(a: number, b: number): number {
+      return a - b;
+    }
+  }
+
+  export class Multiply implements Operation {
+    calculate(a: number, b: number): number {
+      return a * b;
     }
   }
 }
 
 // 실행 예시
-const lettersValidator = new Validation.LettersOnlyValidator();
-const zipCodeValidator = new Validation.ZipCodeValidator();
-console.log("Letters validator:", lettersValidator.isValid("Hello"));
-console.log("Letters validator:", lettersValidator.isValid("Hello123"));
-console.log("Zip code validator:", zipCodeValidator.isValid("12345"));
-console.log("Zip code validator:", zipCodeValidator.isValid("12345-6789"));
+const add = new Calculator.Add();
+const subtract = new Calculator.Subtract();
+const multiply = new Calculator.Multiply();
+
+console.log("10 + 5 =", add.calculate(10, 5));
+console.log("10 - 5 =", subtract.calculate(10, 5));
+console.log("10 * 5 =", multiply.calculate(10, 5));
 
 // 3. 모듈 확장
 declare module "./ch01_15" {
@@ -74,23 +86,7 @@ const extendedUser: User = {
 };
 console.log("Extended User:", extendedUser);
 
-// 4. 모듈 병합
-interface Animal {
-  name: string;
-}
-
-interface Animal {
-  age: number;
-}
-
-// 실행 예시
-const animal: Animal = {
-  name: "멍멍이",
-  age: 3,
-};
-console.log("Animal:", animal);
-
-// 5. 모듈 해석
+// 4. 모듈 해석
 // npm install --save-dev @types/node
 
 // 실행 예시
