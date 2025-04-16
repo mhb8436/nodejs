@@ -1,3 +1,5 @@
+# Sequelize-cli
+
 ```bash
 pm install sequelize sequelize-cli sqlite3
 npx sequelize-cli init
@@ -5,6 +7,8 @@ npx sequelize-cli model:generate --name Post --attributes title:string,content:s
 npx sequelize-cli db:migrate
 
 ```
+
+- [timestamp]-create-board.js
 
 ```json
 config.json
