@@ -12,6 +12,32 @@
 - RESTful API 구현
 - 데이터 검증과 에러 처리
 
+## mongodb install
+
+```bash
+brew -v
+
+brew tap mongodb/brew
+
+brew install mongodb-community@7.0
+
+brew services start mongodb/brew/mongodb-community
+
+brew install mongosh
+
+mongosh
+
+mongod --version
+mongosh --version
+
+
+sudo mkdir -p /data/db
+sudo chown -R $(whoami) /data/db
+
+brew install --cask mongodb-compass
+
+```
+
 ## 디렉토리 구조
 
 ### ch09_01: MongoDB 기본 명령어

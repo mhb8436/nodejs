@@ -38,17 +38,18 @@
 # 프로젝트 설치
 npm install -g @nestjs/cli
 npm install pg
-
-npm install --save @nestjs/swagger
+npm install --save @nestjs/swagger swagger-ui-express
+# npm install --save @nestjs/swagger
 npm i --save class-validator class-transformer
 npm install --save typeorm @nestjs/typeorm
-npm i bcrypt @types/bcrypt
+npm i bcrypt @types/bcrypt @nestjs/passport passport-jwt
 
 psql postgres
 
-CREATE DATABASE mydb3;
+CREATE DATABASE mypost1;
 CREATE USER myuser WITH PASSWORD 'mypassword';
-GRANT ALL PRIVILEGES ON DATABASE mydb3 TO myuser;
+GRANT ALL PRIVILEGES ON DATABASE mypost1 TO myuser;
+
 
 # 개발 서버 실행
 npm run start:dev
