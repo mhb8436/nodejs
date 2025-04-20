@@ -1,0 +1,9 @@
+{
+  "data": [
+    { "id": 1, "name": "홍길동", "age": 31, "score": 87 },
+    { "id": 2, "name": "박길동", "age": 23, "score": 90 },
+    { "id": 3, "name": "이길동", "age": 12, "score": 77 },
+    { "id": 4, "name": "최길동", "age": 34, "score": 57 },
+    { "id": 5, "name": "마길동", "age": 55, "score": 97 }
+  ]
+}

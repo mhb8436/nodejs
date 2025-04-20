@@ -1,0 +1,42 @@
+query {
+  getPosts {
+    id
+    title
+    content
+  }
+}
+
+
+query {
+  getPost(id: "1") {
+    id
+    title
+    content
+  }
+}
+
+mutation {
+  createPost(input: {
+    title: "첫 번째 게시물",
+    content: "이것은 GraphQL로 생성된 첫 번째 게시물입니다."
+  }) {
+    id
+    title
+    content
+  }
+}
+
+mutation {
+  updatePost(id: "1", input: {
+    title: "수정된 제목",
+    content: "수정된 내용입니다."
+  }) {
+    id
+    title
+    content
+  }
+}
+
+mutation {
+  deletePost(id: "1")
+}

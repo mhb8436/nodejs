@@ -36,7 +36,8 @@ console.log("Greet:", greet("홍길동", "반갑습니다"));
 function sum(...numbers: number[]): number {
   return numbers.reduce((acc, curr) => acc + curr, 0);
 }
-console.log("Sum:", sum(1, 2, 3, 4, 5));
+const numbers = [1, 2, 3, 4, 5];
+console.log(sum(...numbers)); // 15
 
 // 5. 함수 오버로드
 function process1(x: number): number;
@@ -49,7 +50,6 @@ function process1(x: any): any {
 }
 console.log("Process number:", process1(10));
 console.log("Process string:", process1("hello"));
-
 // 6. 제네릭 함수
 function identity<T>(arg: T): T {
   return arg;
@@ -76,3 +76,45 @@ console.log("Generic number add:", myGenericNumber.add(5, 3));
 
 // 실행 예시
 console.log("=== TypeScript 함수와 제네릭 예제 ===");
+
+function logValue<T extends string | number | boolean>(value: T): void {
+  console.log(value);
+}
+
+// 사용 예시
+logValue("hello"); // string
+logValue(42); // number
+logValue(true); // boolean
+
+function merge<T extends object, U extends object>(obj1: T, obj2: U): T & U {
+  return { ...obj1, ...obj2 };
+}
+
+function pair<T, U>(first: T, second: U): [T, U] {
+  return [first, second];
+}
+
+// 사용 예시
+const result = pair<string, number>("hello", 42);
+// result의 타입은 [string, number]
+
+// 사용 예시
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 }; // 객체 병합
+const merged = { ...obj1, ...obj2 }; // { a: 1, b: 2, c: 3, d: 4 }
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6]; // 배열 확장
+const combined = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
+
+const original = { x: 1, y: 2 }; // 객체 복사
+const copy = { ...original }; // 얕은 복사
+
+const user1 = { name: "John", age: 30 }; // 객체 확장
+const updatedUser = { ...user, age: 31 }; // { name: 'John', age: 31 }
+
+function sum1(...numbers: number[]): number {
+  return numbers.reduce((acc, curr) => acc + curr, 0);
+}
+const numbers1 = [1, 2, 3, 4, 5];
+console.log(sum(...numbers)); // 15 함수 인자 전달
