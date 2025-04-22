@@ -37,6 +37,7 @@
 ```bash
 # 프로젝트 설치
 npm install -g @nestjs/cli
+nest new post
 npm install pg
 npm install --save @nestjs/swagger swagger-ui-express
 # npm install --save @nestjs/swagger

@@ -4,10 +4,13 @@ import { Cache } from 'cache-manager';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
-import { Weather, WeatherDocument } from './schemas/weather.schema';
+import { PrismaService } from '../prisma/prisma.service';
+
+interface WeatherStats {
+  temperatures: number[];
+  humidities: number[];
+}
 
 @Injectable()
 export class WeatherService {
@@ -16,8 +19,7 @@ export class WeatherService {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly httpService: HttpService,
-    @InjectModel(Weather.name)
-    private weatherModel: Model<WeatherDocument>,
+    private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -41,17 +43,18 @@ export class WeatherService {
           this.CACHE_TTL * 1000,
         );
 
-        // MongoDB에 데이터 저장
-        const weatherData = new this.weatherModel({
-          city,
-          temperature: response.data.main.temp,
-          humidity: response.data.main.humidity,
-          pressure: response.data.main.pressure,
-          windSpeed: response.data.wind.speed,
-          description: response.data.weather[0].description,
-          timestamp: new Date(),
+        // Prisma를 사용하여 데이터 저장
+        await this.prisma.weather.create({
+          data: {
+            city,
+            temperature: response.data.main.temp,
+            humidity: response.data.main.humidity,
+            pressure: response.data.main.pressure,
+            windSpeed: response.data.wind.speed,
+            description: response.data.weather[0].description,
+            timestamp: new Date(),
+          },
         });
-        await weatherData.save();
       }
     } catch (error) {
       console.error('날씨 데이터 가져오기 실패:', error);
@@ -70,14 +73,14 @@ export class WeatherService {
       return cachedData;
     }
 
-    // Redis에 없으면 MongoDB에서 최신 데이터 조회
-    const latestData = await this.weatherModel
-      .findOne({ city })
-      .sort({ timestamp: -1 })
-      .limit(1);
+    // Redis에 없으면 Prisma에서 최신 데이터 조회
+    const latestData = await this.prisma.weather.findFirst({
+      where: { city },
+      orderBy: { timestamp: 'desc' },
+    });
 
     if (latestData) {
-      // MongoDB 데이터를 Redis에 캐싱
+      // Prisma 데이터를 Redis에 캐싱
       await this.cacheManager.set(
         `weather:realtime:${city}`,
         latestData,
@@ -97,35 +100,40 @@ export class WeatherService {
       return cachedStats;
     }
 
-    // MongoDB에서 통계 계산
-    const stats = await this.weatherModel.aggregate([
-      {
-        $match: {
-          city,
-          timestamp: {
-            $gte: new Date(date.setHours(0, 0, 0, 0)),
-            $lte: new Date(date.setHours(23, 59, 59, 999)),
-          },
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // Prisma를 사용하여 통계 계산
+    const weatherData = await this.prisma.weather.findMany({
+      where: {
+        city,
+        timestamp: {
+          gte: startOfDay,
+          lte: endOfDay,
         },
       },
-      {
-        $group: {
-          _id: null,
-          avgTemperature: { $avg: '$temperature' },
-          maxTemperature: { $max: '$temperature' },
-          minTemperature: { $min: '$temperature' },
-          avgHumidity: { $avg: '$humidity' },
-          count: { $sum: 1 },
-        },
-      },
-    ]);
+    });
+
+    const stats = {
+      avgTemperature:
+        weatherData.reduce((acc, curr) => acc + curr.temperature, 0) /
+        weatherData.length,
+      maxTemperature: Math.max(...weatherData.map((w) => w.temperature)),
+      minTemperature: Math.min(...weatherData.map((w) => w.temperature)),
+      avgHumidity:
+        weatherData.reduce((acc, curr) => acc + curr.humidity, 0) /
+        weatherData.length,
+      count: weatherData.length,
+    };
 
     // 계산된 통계를 Redis에 캐싱 (1시간)
-    if (stats.length > 0) {
-      await this.cacheManager.set(cacheKey, stats[0], 3600 * 1000);
+    if (weatherData.length > 0) {
+      await this.cacheManager.set(cacheKey, stats, 3600 * 1000);
     }
 
-    return stats[0] || null;
+    return stats;
   }
 
   async getWeeklyStats(city: string, startDate: Date) {
@@ -137,35 +145,55 @@ export class WeatherService {
       return cachedStats;
     }
 
-    // MongoDB에서 통계 계산
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 7);
 
-    const stats = await this.weatherModel.aggregate([
-      {
-        $match: {
-          city,
-          timestamp: { $gte: startDate, $lte: endDate },
+    // Prisma를 사용하여 통계 계산
+    const weatherData = await this.prisma.weather.findMany({
+      where: {
+        city,
+        timestamp: {
+          gte: startDate,
+          lte: endDate,
         },
       },
-      {
-        $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-          avgTemperature: { $avg: '$temperature' },
-          avgHumidity: { $avg: '$humidity' },
-        },
+      orderBy: {
+        timestamp: 'asc',
       },
-      {
-        $sort: { _id: 1 },
+    });
+
+    // 날짜별로 데이터 그룹화
+    const stats: Record<string, WeatherStats> = weatherData.reduce(
+      (acc, curr) => {
+        const date = curr.timestamp.toISOString().split('T')[0];
+        if (!acc[date]) {
+          acc[date] = {
+            temperatures: [],
+            humidities: [],
+          };
+        }
+        acc[date].temperatures.push(curr.temperature);
+        acc[date].humidities.push(curr.humidity);
+        return acc;
       },
-    ]);
+      {} as Record<string, WeatherStats>,
+    );
+
+    // 각 날짜별 평균 계산
+    const result = Object.entries(stats).map(([date, data]) => ({
+      _id: date,
+      avgTemperature:
+        data.temperatures.reduce((a, b) => a + b, 0) / data.temperatures.length,
+      avgHumidity:
+        data.humidities.reduce((a, b) => a + b, 0) / data.humidities.length,
+    }));
 
     // 계산된 통계를 Redis에 캐싱 (1시간)
-    if (stats.length > 0) {
-      await this.cacheManager.set(cacheKey, stats, 3600 * 1000);
+    if (result.length > 0) {
+      await this.cacheManager.set(cacheKey, result, 3600 * 1000);
     }
 
-    return stats;
+    return result;
   }
 
   async checkRateLimit(ip: string): Promise<boolean> {
