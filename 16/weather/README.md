@@ -12,6 +12,15 @@
 
 ## 프로젝트 설정 방법
 
+```sql
+psql postgres
+
+CREATE DATABASE weather;
+CREATE USER myuser WITH PASSWORD 'mypassword';
+GRANT ALL PRIVILEGES ON DATABASE weather TO myuser;
+
+```
+
 1. NestJS 프로젝트 생성
 
 ```bash
@@ -27,7 +36,7 @@ cd weather
 
 ```bash
 # 기본 의존성
-npm install @nestjs/config @nestjs/axios @nestjs/schedule @nestjs/cache-manager
+npm install axios @nestjs/config @nestjs/axios @nestjs/schedule @nestjs/cache-manager
 
 # Prisma 관련
 npm install prisma @prisma/client
@@ -50,7 +59,7 @@ npx prisma generate
    `.env` 파일을 생성하고 다음 내용을 추가합니다:
 
 ```
-DATABASE_URL="postgresql://username:password@localhost:5432/weather?schema=public"
+DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/weather?schema=public"
 OPENWEATHERMAP_API_KEY="your-api-key"
 ```
 
