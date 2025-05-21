@@ -7,11 +7,6 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 
-interface WeatherStats {
-  temperatures: number[];
-  humidities: number[];
-}
-
 @Injectable()
 export class WeatherService {
   private readonly CACHE_TTL = 300; // 5분
@@ -121,11 +116,14 @@ export class WeatherService {
     for (const data of weatherData) {
       totalTemperature += data.temperature;
     }
-    const avgTemperature = weatherData.length > 0 ? totalTemperature / weatherData.length : 0;
+    const avgTemperature =
+      weatherData.length > 0 ? totalTemperature / weatherData.length : 0;
 
     // 최고/최저 온도 계산
-    let maxTemperature = weatherData.length > 0 ? weatherData[0].temperature : 0;
-    let minTemperature = weatherData.length > 0 ? weatherData[0].temperature : 0;
+    let maxTemperature =
+      weatherData.length > 0 ? weatherData[0].temperature : 0;
+    let minTemperature =
+      weatherData.length > 0 ? weatherData[0].temperature : 0;
     for (const data of weatherData) {
       if (data.temperature > maxTemperature) {
         maxTemperature = data.temperature;
@@ -140,7 +138,8 @@ export class WeatherService {
     for (const data of weatherData) {
       totalHumidity += data.humidity;
     }
-    const avgHumidity = weatherData.length > 0 ? totalHumidity / weatherData.length : 0;
+    const avgHumidity =
+      weatherData.length > 0 ? totalHumidity / weatherData.length : 0;
 
     const stats = {
       avgTemperature,
@@ -185,20 +184,23 @@ export class WeatherService {
     });
 
     // 날짜별로 데이터 그룹화
-    const dailyStats: Record<string, { temperatures: number[], humidities: number[] }> = {};
-    
+    const dailyStats: Record<
+      string,
+      { temperatures: number[]; humidities: number[] }
+    > = {};
+
     // 각 날씨 데이터를 날짜별로 분류
     for (const data of weatherData) {
       const date = data.timestamp.toISOString().split('T')[0];
-      
+
       // 해당 날짜의 데이터가 없으면 초기화
       if (!dailyStats[date]) {
         dailyStats[date] = {
           temperatures: [],
-          humidities: []
+          humidities: [],
         };
       }
-      
+
       // 온도와 습도 데이터 추가
       dailyStats[date].temperatures.push(data.temperature);
       dailyStats[date].humidities.push(data.humidity);
@@ -208,29 +210,29 @@ export class WeatherService {
     const result = [];
     for (const date in dailyStats) {
       const data = dailyStats[date];
-      
+
       // 평균 온도 계산
       let totalTemperature = 0;
       for (const temp of data.temperatures) {
         totalTemperature += temp;
       }
-      const avgTemperature = data.temperatures.length > 0 
-        ? totalTemperature / data.temperatures.length 
-        : 0;
+      const avgTemperature =
+        data.temperatures.length > 0
+          ? totalTemperature / data.temperatures.length
+          : 0;
 
       // 평균 습도 계산
       let totalHumidity = 0;
       for (const humidity of data.humidities) {
         totalHumidity += humidity;
       }
-      const avgHumidity = data.humidities.length > 0 
-        ? totalHumidity / data.humidities.length 
-        : 0;
+      const avgHumidity =
+        data.humidities.length > 0 ? totalHumidity / data.humidities.length : 0;
 
       result.push({
         _id: date,
         avgTemperature,
-        avgHumidity
+        avgHumidity,
       });
     }
 
