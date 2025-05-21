@@ -22,7 +22,7 @@ export class Post {
   @JoinColumn({ name: 'authorId' })
   author: User;
 
-  @Column()
+  @Column({ nullable: true })
   authorId: number;
 
   @CreateDateColumn()

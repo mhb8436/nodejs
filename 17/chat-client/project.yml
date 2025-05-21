@@ -1,0 +1,45 @@
+name: ChatClient
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: 17.0
+  xcodeVersion: "15.0"
+
+packages:
+  SocketIO-Client-Swift:
+    url: https://github.com/socketio/socket.io-client-swift
+    from: 16.0.0
+
+targets:
+  ChatClient:
+    type: application
+    platform: iOS
+    sources:
+      - ChatClient
+    settings:
+      base:
+        INFOPLIST_FILE: ChatClient/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.ChatClient
+        DEVELOPMENT_TEAM: "" # 여기에 개발팀 ID를 입력하세요
+    dependencies:
+      - package: SocketIO-Client-Swift
+    info:
+      path: ChatClient/Info.plist
+      properties:
+        CFBundleDisplayName: ChatClient
+        UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight 
