@@ -1,86 +1,107 @@
 import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { User, UserDocument } from '../users/schemas/user.schema';
+import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto, LoginDto, AuthResponseDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<AuthResponseDto> {
-    // 이메일 중복 체크
-    const existingUser = await this.userModel.findOne({
-      $or: [
-        { email: registerDto.email },
-        { username: registerDto.username },
-      ],
+    const { email, username, password, displayName } = registerDto;
+
+    // Check if user already exists
+    const existingUser = await this.prisma.user.findFirst({
+      where: {
+        OR: [
+          { email },
+          { username },
+        ],
+      },
     });
 
     if (existingUser) {
-      throw new ConflictException('Email or username already exists');
+      throw new ConflictException('User already exists');
     }
 
-    // 비밀번호 해싱
-    const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 사용자 생성
-    const user = await this.userModel.create({
-      ...registerDto,
-      password: hashedPassword,
+    // Create user
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        username,
+        password: hashedPassword,
+        displayName: displayName || username,
+      },
     });
 
-    // JWT 토큰 생성
+    // Generate token
     const token = this.generateToken(user);
 
     return {
-      access_token: token,
+      token,
       user: {
-        id: user._id.toString(),
-        username: user.username,
+        id: user.id,
         email: user.email,
+        username: user.username,
         displayName: user.displayName,
         avatar: user.avatar,
+        isOnline: user.isOnline,
+        lastSeen: user.lastSeen,
       },
     };
   }
 
   async login(loginDto: LoginDto): Promise<AuthResponseDto> {
-    // 사용자 찾기
-    const user = await this.userModel.findOne({ email: loginDto.email });
+    const { email, password } = loginDto;
+
+    // Find user
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // 비밀번호 검증
-    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
+    // Verify password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // JWT 토큰 생성
+    // Update online status
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { isOnline: true },
+    });
+
+    // Generate token
     const token = this.generateToken(user);
 
     return {
-      access_token: token,
+      token,
       user: {
-        id: user._id.toString(),
-        username: user.username,
+        id: user.id,
         email: user.email,
+        username: user.username,
         displayName: user.displayName,
         avatar: user.avatar,
+        isOnline: true,
+        lastSeen: user.lastSeen,
       },
     };
   }
 
-  private generateToken(user: UserDocument): string {
+  private generateToken(user: any): string {
     const payload = {
-      sub: user._id,
+      sub: user.id,
       email: user.email,
       username: user.username,
     };
