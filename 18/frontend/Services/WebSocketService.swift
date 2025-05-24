@@ -1,41 +1,54 @@
 import Foundation
-import Starscream
+import SocketIO
 
-class WebSocketService: ObservableObject, WebSocketDelegate {
+class WebSocketService: ObservableObject {
     @Published var messages: [Message] = []
-    var socket: WebSocket?
-    var token: String
-    var chatRoomId: Int
+    private var manager: SocketManager?
+    private var socket: SocketIOClient?
+    private var token: String
+    private var chatRoomId: Int
 
     init(token: String, chatRoomId: Int) {
         self.token = token
         self.chatRoomId = chatRoomId
-        let url = URL(string: "ws://localhost:3000?access_token=\(token)")!
-        var request = URLRequest(url: url)
-        socket = WebSocket(request: request)
-        socket?.delegate = self
+        let url = URL(string: "http://localhost:3000")! // ws 대신 http, 포트/도메인 맞게 수정
+        manager = SocketManager(socketURL: url, config: [.log(true), .compress, .connectParams(["access_token": token])])
+        socket = manager?.defaultSocket
+        addHandlers()
         socket?.connect()
     }
 
-    func sendMessage(content: String) {
-        let data: [String: Any] = [
-            "event": "sendMessage",
-            "data": [
-                "chatRoomId": chatRoomId,
-                "content": content
-            ]
-        ]
-        if let jsonData = try? JSONSerialization.data(withJSONObject: data) {
-            socket?.write(data: jsonData)
+    private func addHandlers() {
+        socket?.on(clientEvent: .connect) { [weak self] data, ack in
+            print("Socket connected")
+            self?.joinRoom()
+        }
+        socket?.on("message") { [weak self] data, ack in
+            guard let arr = data as? [Any], let dict = arr.first as? [String: Any],
+                  let jsonData = try? JSONSerialization.data(withJSONObject: dict),
+                  let message = try? JSONDecoder().decode(Message.self, from: jsonData) else { return }
+            DispatchQueue.main.async {
+                self?.messages.append(message)
+            }
+        }
+        socket?.on("notice") { data, ack in
+            print("Notice: ", data)
+        }
+        socket?.on(clientEvent: .disconnect) { data, ack in
+            print("Socket disconnected")
         }
     }
 
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
-        switch event {
-        case .text(let string):
-            // JSON 파싱 후 messages에 추가
-            break
-        default: break
-        }
+    func joinRoom() {
+        socket?.emit("joinRoom", ["chatRoomId": chatRoomId])
+    }
+    func leaveRoom() {
+        socket?.emit("leaveRoom", ["chatRoomId": chatRoomId])
+    }
+    func sendMessage(content: String) {
+        socket?.emit("sendMessage", ["chatRoomId": chatRoomId, "content": content])
+    }
+    func disconnect() {
+        socket?.disconnect()
     }
 }
