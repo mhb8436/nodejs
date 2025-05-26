@@ -7,9 +7,14 @@ class ChatRoomViewModel: ObservableObject {
     var chatRoomId: Int = 0
 
     func fetchMessages() {
-        APIService.shared.fetchMessages(chatRoomId: chatRoomId) { messages in
-            DispatchQueue.main.async {
-                self.messages = messages
+        Task {
+            do {
+                let fetchedMessages = try await APIService.shared.fetchMessages(chatRoomId: chatRoomId)
+                await MainActor.run {
+                    self.messages = fetchedMessages
+                }
+            } catch {
+                print("Error fetching messages: \(error)")
             }
         }
     }

@@ -29,32 +29,38 @@ struct BoardView: View {
         .onAppear {
             viewModel.fetchPosts()
         }
-    }
-    .alert("글 작성", isPresented: $showingCreatePostAlert, actions: {
-        TextField("제목", text: $newPostTitle)
-        TextField("내용", text: $newPostContent)
-        Button("등록") {
-            Task {
-                isCreatingPost = true
-                do {
-                    let result = try await APIService.shared.createPost(title: newPostTitle, content: newPostContent, token: token)
-                    if result {
-                        viewModel.fetchPosts()
-                        newPostTitle = ""
-                        newPostContent = ""
-                    } else {
-                        createPostError = "글 작성 실패"
+        .alert("글 작성", isPresented: $showingCreatePostAlert) {
+            VStack {
+                TextField("제목", text: $newPostTitle)
+                TextField("내용", text: $newPostContent)
+                Button("등록") {
+                    Task {
+                        isCreatingPost = true
+                        do {
+                            let result = try await APIService.shared.createPost(title: newPostTitle, content: newPostContent, token: token)
+                            if result {
+                                viewModel.fetchPosts()
+                                newPostTitle = ""
+                                newPostContent = ""
+                            } else {
+                                createPostError = "글 작성 실패"
+                            }
+                        } catch {
+                            createPostError = "오류: \(error.localizedDescription)"
+                        }
+                        isCreatingPost = false
                     }
-                } catch {
-                    createPostError = "오류: \(error.localizedDescription)"
                 }
-                isCreatingPost = false
+                Button("취소", role: .cancel) {}
+            }
+        } message: {
+            if let error = createPostError {
+                Text(error)
             }
         }
-        Button("취소", role: .cancel) {}
-    }, message: {
-        if let error = createPostError {
-            Text(error)
-        }
-    })
+    }
+}
+
+#Preview {
+    BoardView(viewModel: BoardViewModel())
 }

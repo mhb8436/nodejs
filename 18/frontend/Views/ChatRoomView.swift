@@ -9,7 +9,7 @@ struct ChatRoomView: View {
     init(chatRoomId: Int, token: String) {
         self.chatRoomId = chatRoomId
         self.token = token
-        self._socketService = ObservedObject(wrappedValue: WebSocketService(token: token, chatRoomId: chatRoomId))
+        self._socketService = ObservedObject(wrappedValue: WebSocketService(chatRoomId: chatRoomId))
     }
 
     var body: some View {
@@ -29,5 +29,16 @@ struct ChatRoomView: View {
             }.padding()
         }
         .navigationTitle("채팅방")
+        .onDisappear {
+            print("ChatRoomView disappeared - disconnecting WebSocket")
+            socketService.leaveRoom()  // 방을 나가고
+            socketService.disconnect() // 웹소켓 연결을 끊음
+        }
+    }
+}
+
+#Preview {
+    NavigationView {
+        ChatRoomView(chatRoomId: 1, token: "dummy_token")
     }
 }

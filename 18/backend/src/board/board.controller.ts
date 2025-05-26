@@ -1,10 +1,12 @@
-import { Controller, Post, Get, Patch, Delete, Param, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, Body, UseGuards, Request, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { BoardService } from './board.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import uploadMiddleware from '../middleware/upload';
 
 @Controller('board')
 export class BoardController {
@@ -13,8 +15,14 @@ export class BoardController {
   // 게시글 작성
   @UseGuards(JwtAuthGuard)
   @Post('posts')
-  async createPost(@Request() req, @Body() dto: CreatePostDto) {
-    return this.boardService.createPost(req.user.userId, dto);
+  @UseInterceptors(...uploadMiddleware)
+  async createPost(
+    @Request() req,
+    @Body() dto: CreatePostDto,
+    @UploadedFiles() files: Express.Multer.File[]
+  ) {
+    // files 배열의 각 파일에 url 속성이 추가되어 있음
+    return this.boardService.createPost(req.user.userId, dto, files);
   }
 
   // 전체 게시글 조회

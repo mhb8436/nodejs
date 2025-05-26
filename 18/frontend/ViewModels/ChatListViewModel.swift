@@ -6,9 +6,14 @@ class ChatListViewModel: ObservableObject {
     var token: String = ""
 
     func fetchRooms() {
-        APIService.shared.fetchChatRooms { rooms in
-            DispatchQueue.main.async {
-                self.rooms = rooms
+        Task {
+            do {
+                let fetchedRooms = try await APIService.shared.fetchChatRooms()
+                await MainActor.run {
+                    self.rooms = fetchedRooms
+                }
+            } catch {
+                print("Error fetching chat rooms: \(error)")
             }
         }
     }

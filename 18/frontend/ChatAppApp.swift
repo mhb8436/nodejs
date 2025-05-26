@@ -16,11 +16,17 @@ struct ChatAppApp: App {
 
 struct MainTabView: View {
     let token: String
-    @StateObject var boardVM = BoardViewModel()
+    @StateObject private var boardVM: BoardViewModel
     @StateObject var chatListVM = ChatListViewModel()
+    
+    init(token: String) {
+        self.token = token
+        _boardVM = StateObject(wrappedValue: BoardViewModel(token: token))
+    }
+    
     var body: some View {
         TabView {
-            BoardView(viewModel: boardVM)
+            BoardView(viewModel: boardVM, token: token)
                 .tabItem { Label("게시판", systemImage: "doc.text") }
             ChatListView(viewModel: chatListVM, token: token)
                 .tabItem { Label("채팅", systemImage: "bubble.left.and.bubble.right") }

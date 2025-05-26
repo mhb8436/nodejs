@@ -17,28 +17,48 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    func login(email: String, password: String) {
-        APIService.shared.login(email: email, password: password) { token in
-            DispatchQueue.main.async {
-                if let token = token {
+    func login(email: String, password: String) async {
+        do {
+            if let token = try await APIService.shared.login(email: email, password: password) {
+                await MainActor.run {
                     self.token = token
                     self.isLoggedIn = true
+                    self.loginError = nil
                     UserDefaults.standard.set(token, forKey: self.tokenKey)
-                } else {
-                    self.loginError = "로그인 실패"
                 }
+            } else {
+                await MainActor.run {
+                    self.loginError = "로그인 실패"
+                    self.isLoggedIn = false
+                    self.token = nil
+                }
+            }
+        } catch {
+            await MainActor.run {
+                self.loginError = "오류: \(error.localizedDescription)"
+                self.isLoggedIn = false
+                self.token = nil
             }
         }
     }
 
-    func signup(email: String, password: String, nickname: String) {
-        APIService.shared.signup(email: email, password: password, nickname: nickname) { success in
-            DispatchQueue.main.async {
+    func signup(email: String, password: String, nickname: String) async {
+        do {
+            let success = try await APIService.shared.signup(email: email, password: password, nickname: nickname)
+            await MainActor.run {
                 if success {
-                    self.loginError = nil
+                    self.signupError = nil
+                    // 회원가입 성공 시 자동으로 로그인
+                    Task {
+                        await self.login(email: email, password: password)
+                    }
                 } else {
                     self.signupError = "회원가입 실패"
                 }
+            }
+        } catch {
+            await MainActor.run {
+                self.signupError = "오류: \(error.localizedDescription)"
             }
         }
     }

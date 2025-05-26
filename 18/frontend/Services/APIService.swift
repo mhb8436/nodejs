@@ -4,15 +4,40 @@ import Alamofire
 class APIService {
     static let shared = APIService()
     let baseURL = "http://localhost:3000" // 실제 서버 주소로 변경
+    private let tokenKey = "userToken"
+    
+    enum APIError: Error {
+        case missingToken
+    }
+    
+    // 토큰 가져오기
+    func getToken() -> String? {
+        return UserDefaults.standard.string(forKey: tokenKey)
+    }
 
+    // 토큰이 필요한 API 호출을 위한 헤더 생성
+    private func getAuthHeaders() throws -> HTTPHeaders {
+        guard let token = getToken() else {
+            throw APIError.missingToken
+        }
+        return ["Authorization": "Bearer \(token)"]
+    }
+    
     // 회원가입
     func signup(email: String, password: String, nickname: String) async throws -> Bool {
         let params = ["email": email, "password": password, "nickname": nickname]
-        let response = try await AF.request("\(baseURL)/auth/signup", method: .post, parameters: params, encoding: JSONEncoding.default)
+        let dataResponse = try await AF.request("\(baseURL)/auth/signup", 
+                                              method: .post, 
+                                              parameters: params, 
+                                              encoding: JSONEncoding.default)
             .validate()
             .serializingData()
             .response
-        return response.error == nil
+        
+        if let error = dataResponse.error {
+            throw error
+        }
+        return true
     }
 
     // 로그인
@@ -42,10 +67,14 @@ class APIService {
     }
 
     // 글 작성
-    func createPost(title: String, content: String, token: String) async throws -> Bool {
+    func createPost(title: String, content: String) async throws -> Bool {
         let params = ["title": title, "content": content]
-        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
-        let response = try await AF.request("\(baseURL)/board/posts", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        let headers = try getAuthHeaders()
+        let response = try await AF.request("\(baseURL)/board/posts", 
+                                          method: .post, 
+                                          parameters: params, 
+                                          encoding: JSONEncoding.default, 
+                                          headers: headers)
             .validate()
             .serializingData()
             .response
@@ -53,10 +82,14 @@ class APIService {
     }
 
     // 댓글 작성
-    func createAnswer(postId: Int, content: String, token: String) async throws -> Bool {
+    func createAnswer(postId: Int, content: String) async throws -> Bool {
         let params = ["content": content]
-        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
-        let response = try await AF.request("\(baseURL)/board/posts/\(postId)/answers", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        let headers = try getAuthHeaders()
+        let response = try await AF.request("\(baseURL)/board/posts/\(postId)/answers", 
+                                          method: .post, 
+                                          parameters: params, 
+                                          encoding: JSONEncoding.default, 
+                                          headers: headers)
             .validate()
             .serializingData()
             .response
@@ -72,10 +105,14 @@ class APIService {
     }
 
     // 채팅방 생성
-    func createChatRoom(name: String, token: String) async throws -> Bool {
+    func createChatRoom(name: String) async throws -> Bool {
         let params = ["name": name]
-        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
-        let response = try await AF.request("\(baseURL)/chat/rooms", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        let headers = try getAuthHeaders()
+        let response = try await AF.request("\(baseURL)/chat/rooms", 
+                                          method: .post, 
+                                          parameters: params, 
+                                          encoding: JSONEncoding.default, 
+                                          headers: headers)
             .validate()
             .serializingData()
             .response

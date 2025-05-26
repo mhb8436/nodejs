@@ -10,7 +10,7 @@ struct AuthView: View {
     var body: some View {
         VStack {
             TextField("이메일", text: $email)
-                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             SecureField("비밀번호", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -20,9 +20,13 @@ struct AuthView: View {
             }
             Button(isSignup ? "회원가입" : "로그인") {
                 if isSignup {
-                    viewModel.signup(email: email, password: password, nickname: nickname)
+                    Task {
+                        await viewModel.signup(email: email, password: password, nickname: nickname)
+                    }
                 } else {
-                    viewModel.login(email: email, password: password)
+                    Task {
+                        await viewModel.login(email: email, password: password)
+                    }
                 }
             }
             .padding()
@@ -39,4 +43,8 @@ struct AuthView: View {
         }
         .padding()
     }
+}
+
+#Preview {
+    AuthView(viewModel: AuthViewModel())
 }

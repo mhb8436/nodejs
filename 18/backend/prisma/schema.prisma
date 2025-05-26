@@ -27,6 +27,7 @@ model Post {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   answers   Answer[]
+  attachments Attachment[]
 }
 
 model Answer {
@@ -53,4 +54,24 @@ model Message {
   chatRoomId Int
   user       User     @relation(fields: [userId], references: [id])
   userId     Int
+}
+
+model Attachment {
+  id          Int      @id @default(autoincrement())
+  fileName    String   // Original file name
+  fileUrl     String   // Azure Blob Storage URL
+  fileSize    Int      // File size in bytes
+  fileType    String   // MIME type
+  createdAt   DateTime @default(now())
+  post        Post     @relation(fields: [postId], references: [id])
+  postId      Int
+}
+
+model CrawledData {
+  id          Int      @id @default(autoincrement())
+  url         String
+  title       String
+  content     String   @db.Text
+  crawledAt   DateTime @default(now())
+  metadata    Json     // description, ogImage, images, links 등을 JSON으로 저장
 }
