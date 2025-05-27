@@ -6,7 +6,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import uploadMiddleware from '../middleware/upload';
+import { AzureUploadInterceptor } from '../azure-storage/azure-upload.interceptor';
 
 @Controller('board')
 export class BoardController {
@@ -15,14 +15,28 @@ export class BoardController {
   // 게시글 작성
   @UseGuards(JwtAuthGuard)
   @Post('posts')
-  @UseInterceptors(...uploadMiddleware)
+  @UseInterceptors(
+    FilesInterceptor('files', 5, {
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB
+      },
+      fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+        if (allowedTypes.includes(file.mimetype)) {
+          cb(null, true);
+        } else {
+          cb(new Error('지원하지 않는 파일 형식입니다.'), false);
+        }
+      },
+    }),
+    AzureUploadInterceptor
+  )
   async createPost(
     @Request() req,
     @Body() dto: CreatePostDto,
-    @UploadedFiles() files: Express.Multer.File[]
   ) {
-    // files 배열의 각 파일에 url 속성이 추가되어 있음
-    return this.boardService.createPost(req.user.userId, dto, files);
+    // request.uploadedFiles에서 업로드된 파일 정보를 가져옴
+    return this.boardService.createPost(req.user.userId, dto, req.uploadedFiles);
   }
 
   // 전체 게시글 조회
