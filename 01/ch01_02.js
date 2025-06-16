@@ -51,3 +51,17 @@ console.log(Boolean("Hello"));
 console.log(25 + 125); // 숫자 + 숫자
 console.log("25" + 125); // 문자열 + 숫자
 console.log("25" - 125); // 문자열 - 숫자
+
+// parseInt와 parseFloat 예제
+console.log(parseInt("123"));        // 123
+console.log(parseInt("123.45"));     // 123 (소수점 이하 무시)
+console.log(parseInt("123abc"));     // 123 (숫자가 아닌 문자 이후 무시)
+console.log(parseInt("abc123"));     // NaN (시작이 숫자가 아니면 NaN)
+
+console.log(parseFloat("123.45"));   // 123.45
+console.log(parseFloat("123.45abc")); // 123.45
+console.log(parseFloat("123"));      // 123 (정수도 변환)
+
+// 진수 지정 (parseInt의 두 번째 매개변수)
+console.log(parseInt("1010", 2));    // 10 (2진수로 해석)
+console.log(parseInt("FF", 16));     // 255 (16진수로 해석)

@@ -68,3 +68,78 @@ async function getData() {
 }
 
 getData();
+
+// 문제 1  2초 후에 "안녕하세요!"라는 메시지를 출력하는 Promise를 만들고 실행하세요
+
+// 간단한 타이머 Promise
+function greet() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("안녕하세요!");
+    }, 2000);
+  });
+}
+
+// Promise 사용하기
+greet().then((message) => {
+  console.log(message);
+});
+
+
+// 문제 2 숫자를 입력받아 그 숫자가 짝수인지 홀수인지 알려주는 Promise 함수를 만드세요.
+// 짝수/홀수 확인 Promise
+function checkEvenOdd(number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (number % 2 === 0) {
+        resolve(`${number}는 짝수입니다.`);
+      } else {
+        resolve(`${number}는 홀수입니다.`);
+      }
+    }, 1000);
+  });
+}
+
+// Promise 사용하기
+checkEvenOdd(4).then((result) => {
+  console.log(result);
+});
+
+checkEvenOdd(7).then((result) => {
+  console.log(result);
+});
+
+// 문제 3 위에서 만든 greet 함수를 async/await를 사용하여 호출하는 함수를 만드세요.
+// async/await 사용하기
+async function sayHello() {
+  console.log("인사말을 기다리는 중...");
+  const message = await greet();
+  console.log(message);
+}
+
+// 문제 4  파일 다운로드를 시뮬레이션하는 간단한 Promise 함수를 만들고, 이를 async/await로 사용하세요. 다운로드는 3초가 걸리고, 완료되면 "파일 다운로드 완료!" 메시지를 출력하세요
+// 파일 다운로드 시뮬레이션
+
+function downloadFile() {
+  return new Promise((resolve) => {
+    console.log("파일 다운로드 중...");
+    setTimeout(() => {
+      resolve("파일 다운로드 완료!");
+    }, 3000);
+  });
+}
+
+// async/await로 사용하기
+async function startDownload() {
+  console.log("다운로드를 시작합니다.");
+  const result = await downloadFile();
+  console.log(result);
+}
+
+// 함수 호출
+startDownload();
+
+
+// 문제 5
+
+

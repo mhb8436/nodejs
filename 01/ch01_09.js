@@ -104,3 +104,65 @@ console.log(`ID: ${id}`);
 console.log(`이름: ${userName}`);
 console.log(`도시: ${city}`);
 console.log(`거리: ${street}`);
+
+
+/// 문제 1 const colors = ["빨강", "파랑", "노랑", "초록", "보라"]; 여기서 
+//  첫 번째 요소는 first, 두 번째 요소는 second, 나머지 요소들은 others라는 변수에 할당하는 코드를 작성하세요
+const colors = ["빨강", "파랑", "노랑", "초록", "보라"];
+const [first, second, ...others] = colors;
+
+console.log(`첫 번째: ${first}`);
+console.log(`두 번째: ${second}`);
+console.log(`나머지: ${others}`);
+
+/// 문제 2
+// const person = {
+//   name: "김민수",
+//   age: 28
+// };
+// 객체에서 name, age, job 속성을 구조 분해 할당으로 추출하세요. job 속성이 없을 경우 "무직"이라는 기본값을 사용하세요.
+const person1 = {
+  name: "김민수",
+  age: 28
+};
+
+const { name, age, job = "무직" } = person;
+
+console.log(`이름: ${name}`);
+console.log(`나이: ${age}`);
+console.log(`직업: ${job}`);
+
+// 문제 3
+// const movie = {
+//   title: "기생충",
+//   director: "봉준호",
+//   year: 2019,
+//   rating: {
+//     imdb: 8.6,
+//     rottenTomatoes: 98
+//   }
+// }; 
+//  중첩 객체에서 title, director, year, rating.imdb 값을 구조 분해 할당으로 추출하세요. 
+const { 
+  title, 
+  director, 
+  year, 
+  rating: { imdb: imdbRating } 
+} = movie;
+
+console.log(`영화: ${title}`);
+console.log(`감독: ${director}`);
+console.log(`개봉년도: ${year}`);
+console.log(`IMDB 평점: ${imdbRating}`);
+
+//문제 4
+// const user1 = { name: "박지민", age: 25, email: "jimin@example.com" };
+// const user2 = { name: "김태희", age: 30 };
+// console.log(formatUserInfo(user1));
+// console.log(formatUserInfo(user2));
+// 함수 formatUserInfo 를 만들어 보세요 
+
+function formatUserInfo({ name, age, email = "이메일 없음" }) {
+  return `이름: ${name}, 나이: ${age}, 이메일: ${email}`;
+}
+

@@ -73,3 +73,15 @@ class MathUtils {
 }
 
 console.log(MathUtils.add(10, 20));
+
+
+// 문제 1 클래스명은 CarInfo, 속성은 brand, color, model 
+//       메서드는 drive() -> "모델 xx가 달리는 중", stop() -> "모델 xx가 멈췄습니다."
+//       객체를 2개 정도 생성 후에 drive, stop 메소드 호출 해보기 
+
+
+// 문제 2 CarInfo를 상속 받아서 ElectricCarInfo를 만들어보세요 
+//       추가 속성은 battery,
+//       추가로 charge() -> "모델 xx가 충전 중", stop() -> "모델 xx가 멈췄습니다." 메소드 추가 
+//       객체를 2개 정도 생성 후에 drive, stop 메소드 호출 해보기 
+
