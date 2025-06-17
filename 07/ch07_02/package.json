@@ -1,11 +1,11 @@
 {
-  "name": "ch05_02",
+  "name": "ch07_02",
   "version": "1.0.0",
-  "description": "Express 라우터 모듈화 예제",
-  "main": "src/app.js",
+  "description": "API 테스트 도구 활용 예제",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "express": "^4.18.2",

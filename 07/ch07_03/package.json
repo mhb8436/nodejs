@@ -1,0 +1,16 @@
+{
+  "name": "ch07_03",
+  "version": "1.0.0",
+  "description": "API 문서 작성 예제",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

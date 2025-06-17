@@ -1,19 +1,16 @@
 {
-  "name": "ext-03",
+  "name": "ch07_01",
   "version": "1.0.0",
-  "description": "board ",
-  "main": "index.js",
+  "description": "HTTP 상태 코드와 에러 처리 예제 - 게시판 API",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "ethan.lee",
   "license": "MIT",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "moment": "^2.30.1",
-    "sqlite3": "^5.1.7"
+    "express": "^4.18.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

@@ -1,19 +1,21 @@
-const http = require('http');
-const url = require('url');
+// Express.js 웹 서버 만들기 - Hello World 예제
 
-http.createServer((req, res) => {
-    const path = url.parse(req.url, true).pathname;
-    res.setHeader('Content-Type', 'text/html');
+// 1. Express 모듈 가져오기
+const express = require("express");
 
-    if(path == '/hello'){
-        res.end('<h1>hello</h1>');
-    }else if(path == '/world') {
-        res.end('<h1>world</h1>');
-    }else{
-        res.end('<h1>hi</h1>');
-    }
-    
-}).listen(4500, ()=> console.log('Add Routing'));
+// 2. Express 애플리케이션 생성
+const app = express();
 
+// 3. 서버 포트 설정
+const port = 3000;
 
+// 4. 라우팅 설정
+// GET 요청이 루트 경로(/)로 오면 'Hello World!' 응답
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
+// 5. 서버 시작
+app.listen(port, () => {
+  console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+});

@@ -1,20 +1,23 @@
 {
-  "name": "ext-03",
+  "name": "ch05_04",
   "version": "1.0.0",
-  "description": "board ",
-  "main": "index.js",
+  "description": "API 개발 도구와 문서화 예제",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest"
   },
-  "author": "ethan.lee",
-  "license": "MIT",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "moment": "^2.30.1"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5",
+    "swagger-ui-express": "^5.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
   }
 }

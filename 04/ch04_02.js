@@ -1,50 +1,51 @@
-import http from "http";
-import url from "url";
-import data from "./test.json" assert { type: "json" };
+// Express.js로 간단한 홈페이지 만들기
 
-http
-  .createServer((req, res) => {
-    const path = url.parse(req.url, true).pathname;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+const express = require("express");
+const app = express();
 
-    if (path === "/json") {
-      res.end(JSON.stringify(data));
-    } else if (path === "/add" && req.method === "POST") {
-      let body = "";
+// 정적 파일 제공
+app.use(express.static("public"));
 
-      req.on("data", (chunk) => {
-        body += chunk.toString();
-      });
+// 1. 홈페이지 라우트
+app.get("/", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Express 홈페이지</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 40px; }
+          h1 { color: #333; }
+          nav { margin: 20px 0; }
+          nav a { margin-right: 10px; }
+        </style>
+      </head>
+      <body>
+        <h1>Express.js 웹사이트</h1>
+        <nav>
+          <a href="/">홈</a>
+          <a href="/about">소개</a>
+          <a href="/contact">연락처</a>
+        </nav>
+        <p>Express.js로 만든 간단한 웹사이트입니다.</p>
+      </body>
+    </html>
+  `);
+});
 
-      req.on("end", () => {
-        try {
-          const newUser = JSON.parse(body);
-          newUser.id = data.data.length + 1;
-          data.data.push(newUser);
+// 2. 소개 페이지 라우트
+app.get("/about", (req, res) => {
+  res.send(
+    "<h1>소개 페이지</h1><p>이 웹사이트는 Express.js 학습을 위해 만들어졌습니다.</p>"
+  );
+});
 
-          res.end(
-            JSON.stringify({
-              success: true,
-              message: "사용자가 추가되었습니다",
-              newUser: newUser,
-            })
-          );
-        } catch (error) {
-          res.end(
-            JSON.stringify({
-              success: false,
-              message: "잘못된 데이터 형식입니다",
-            })
-          );
-        }
-      });
-    } else {
-      res.end(
-        JSON.stringify({
-          success: false,
-          message: "잘못된 요청입니다",
-        })
-      );
-    }
-  })
-  .listen(4500, () => console.log("Add Routing 2"));
+// 3. 연락처 페이지 라우트
+app.get("/contact", (req, res) => {
+  res.send("<h1>연락처</h1><p>이메일: example@example.com</p>");
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+});
