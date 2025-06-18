@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: 할 일 관리 API
+  description: 할 일 관리를 위한 RESTful API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1
+    description: 개발 서버
+paths:
+  /todos:
+    get:
+      summary: 할 일 목록 조회
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [pending, completed]
+          description: 할 일 상태로 필터링
+      responses:
+        "200":
+          description: 할 일 목록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      todos:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Todo"
+    post:
+      summary: 새 할 일 생성
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  example: "보고서 작성하기"
+                description:
+                  type: string
+                  example: "프로젝트 진행 상황 보고서 작성"
+      responses:
+        "201":
+          description: 할 일 생성 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        $ref: "#/components/schemas/Todo"
+  /todos/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: 할 일 ID
+    get:
+      summary: 특정 할 일 조회
+      responses:
+        "200":
+          description: 할 일 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        $ref: "#/components/schemas/Todo"
+    patch:
+      summary: 할 일 수정
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+                  enum: [pending, completed]
+      responses:
+        "200":
+          description: 할 일 수정 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      todo:
+                        $ref: "#/components/schemas/Todo"
+    delete:
+      summary: 할 일 삭제
+      responses:
+        "204":
+          description: 할 일 삭제 성공
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "보고서 작성하기"
+        description:
+          type: string
+          example: "프로젝트 진행 상황 보고서 작성"
+        status:
+          type: string
+          enum: [pending, completed]
+          example: pending
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-01-01T00:00:00.000Z"

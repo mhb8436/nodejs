@@ -1,16 +1,19 @@
 {
-  "name": "ch03_01",
+  "name": "ch05_01",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Express 미들웨어와 에러 처리 예제",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "express": "^4.19.2",
-    "pug": "^3.0.3"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
