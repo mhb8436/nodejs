@@ -24,8 +24,17 @@ const endMoment = moment("2024-12-31");
 const diffDays = endMoment.diff(startMoment, "days");
 console.log("날짜 차이 (moment):", diffDays, "일");
 
+require("moment/locale/ko"); // 한국어 로케일 불러오기
+moment.locale("ko");
+
 // 5. 요일 확인
 console.log("오늘 요일 (moment):", moment().format("dddd"));
+
+// 6. 특정 날짜까지 남은 일수 계산
+const today = moment(); // 현재 날짜
+const endDate = moment("2025-08-20"); // 과정 종료일
+const diffDay = endDate.diff(today, "days");
+console.log("과정 종료까지 남은 날수:", diffDay, "일");
 
 console.log("\n=== dayjs 예제 ===");
 
