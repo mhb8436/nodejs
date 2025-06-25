@@ -57,23 +57,23 @@ app.post("/posts", (req, res) => {
   const { title, content, author } = req.body;
   let sql = `insert into posts(title, content, author) 
           values(?, ?, ?)`;
-  db.prepare(sql).run(title, content, author);
-  res.redirect("/posts");
+  const info = db.prepare(sql).run(title, content, author);
+  res.json({ success: true, message: 'Post created successfully', id: info.lastInsertRowid });
 });
 
 app.put("/posts/:id", (req, res) => {
   const id = req.params.id;
   const { title, content } = req.body;
   let sql = `update posts set title = ?, content = ? where id = ?`;
-  db.prepare(sql).run(title, content, id);
-  res.redirect("/posts");
+  const info = db.prepare(sql).run(title, content, id);
+  res.json({ success: true, message: 'Post updated successfully' });
 });
 
 app.delete("/posts/:id", (req, res) => {
   const id = req.params.id;
   let sql = `delete from posts where id = ?`;
-  db.prepare(sql).run(id);
-  res.redirect("/posts");
+  const info = db.prepare(sql).run(id);
+  res.json({ success: true, message: 'Post deleted successfully' });
 });
 
 app.listen(PORT, () => {

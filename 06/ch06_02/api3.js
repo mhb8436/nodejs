@@ -45,8 +45,22 @@ app.get("/posts", (req, res) => {
 
   const stmt = db.prepare(sql);
   const rows = stmt.all(limit, offset);
-  console.log(rows);
-  res.json({ data: rows });
+
+  // 전체 게시물 수 조회하여 페이지네이션 정보 제공
+  const totalCount = db
+    .prepare(`SELECT COUNT(*) as count FROM posts`)
+    .get().count;
+  const totalPages = Math.ceil(totalCount / limit);
+
+  res.status(200).json({
+    data: rows,
+    pagination: {
+      currentPage: page,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      limit: limit,
+    },
+  });
 });
 
 app.get("/posts/:id", (req, res) => {
@@ -59,54 +73,117 @@ app.get("/posts/:id", (req, res) => {
   const stmt = db.prepare(sql);
   const post = stmt.get(id);
 
-  res.json({ data: post });
+  if (!post) {
+    return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
+  }
+
+  res.status(200).json({ data: post });
 });
 
 app.post("/posts", (req, res) => {
   const { title, content, author } = req.body;
   let sql = `insert into posts(title, content, author) 
           values(?, ?, ?)`;
-  db.prepare(sql).run(title, content, author);
-  res.redirect("/posts");
+  const result = db.prepare(sql).run(title, content, author);
+
+  // 생성된 리소스 조회
+  const newPost = db
+    .prepare(`SELECT * FROM posts WHERE id = ?`)
+    .get(result.lastInsertRowid);
+  res.status(201).json({ message: "게시물이 생성되었습니다.", data: newPost });
 });
 
 app.put("/posts/:id", (req, res) => {
   const id = req.params.id;
   const { title, content } = req.body;
-  let sql = `update posts set title = ?, content = ? where id = ?`;
-  db.prepare(sql).run(title, content, id);
-  res.redirect("/posts");
+
+  // 먼저 게시물이 존재하는지 확인
+  const existingPost = db.prepare(`SELECT * FROM posts WHERE id = ?`).get(id);
+  if (!existingPost) {
+    return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
+  }
+
+  // 수정할 내용 가져오기
+  const newTitle = title !== undefined ? title : existingPost.title;
+  const newContent = content !== undefined ? content : existingPost.content;
+
+  // 수정하기
+  let sql = `UPDATE posts SET title = ?, content = ? WHERE id = ?`;
+  db.prepare(sql).run(newTitle, newContent, id);
+
+  // 수정된 리소스 조회
+  const updatedPost = db.prepare(`SELECT * FROM posts WHERE id = ?`).get(id);
+  res
+    .status(200)
+    .json({ message: "게시물이 수정되었습니다.", data: updatedPost });
 });
 
 app.delete("/posts/:id", (req, res) => {
   const id = req.params.id;
+  // 삭제 전에 게시물이 존재하는지 확인
+  const post = db.prepare(`SELECT id FROM posts WHERE id = ?`).get(id);
+  if (!post) {
+    return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
+  }
+
   let sql = `delete from posts where id = ?`;
   db.prepare(sql).run(id);
-  res.redirect("/posts");
+  res.status(204).end(); // No Content 응답
 });
-
+app.use((req, res, next) => {
+  console.log("middleware");
+  next();
+});
 // 댓글 관련 API 엔드포인트 추가
 app.get("/posts/:id/comments", (req, res) => {
   const postId = req.params.id;
+
+  // 게시물이 존재하는지 확인
+  const post = db.prepare(`SELECT id FROM posts WHERE id = ?`).get(postId);
+  if (!post) {
+    return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
+  }
+
   const sql = `SELECT id, author, content, createAt FROM comments WHERE postId = ? ORDER BY createAt DESC`;
   const stmt = db.prepare(sql);
   const comments = stmt.all(postId);
-  res.json({ data: comments });
+  res.status(200).json({ data: comments });
 });
 
 app.post("/posts/:id/comments", (req, res) => {
   const postId = req.params.id;
   const { author, content } = req.body;
+
+  // 게시물이 존재하는지 확인
+  const post = db.prepare(`SELECT id FROM posts WHERE id = ?`).get(postId);
+  if (!post) {
+    return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
+  }
+
   const sql = `INSERT INTO comments(postId, author, content) VALUES(?, ?, ?)`;
-  db.prepare(sql).run(postId, author, content);
-  res.json({ message: "댓글이 추가되었습니다." });
+  const result = db.prepare(sql).run(postId, author, content);
+
+  // 생성된 댓글 조회
+  const newComment = db
+    .prepare(`SELECT * FROM comments WHERE id = ?`)
+    .get(result.lastInsertRowid);
+  res.status(201).json({ message: "댓글이 추가되었습니다.", data: newComment });
 });
 
-app.delete("/comments/:id", (req, res) => {
-  const commentId = req.params.id;
+app.delete("/posts/:postId/comments/:commentId", (req, res) => {
+  const { postId, commentId } = req.params;
+
+  // 댓글이 해당 게시물에 속하는지 확인
+  const comment = db
+    .prepare(`SELECT id FROM comments WHERE id = ? AND postId = ?`)
+    .get(commentId, postId);
+  if (!comment) {
+    return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+  }
+
   const sql = `DELETE FROM comments WHERE id = ?`;
   db.prepare(sql).run(commentId);
-  res.json({ message: "댓글이 삭제되었습니다." });
+  res.status(204).end(); // No Content 응답
 });
 
 app.listen(PORT, () => {

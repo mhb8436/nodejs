@@ -82,12 +82,13 @@ app.post("/posts", (req, res) => {
   const write_date = moment().format("YYYY-MM-DD");
   let sql = `insert into posts(title, content, writer, write_date) 
         values('${req.body.title}', '${req.body.content}', 'tester', '${write_date}')`;
-  db.run(sql, (err) => {
+  db.run(sql, function(err) {
     if (err) {
       console.error(err);
+      return res.status(500).json({ error: 'Failed to create post' });
     }
     console.log(`A row has been inserted with rowid ${this.lastID}`);
-    res.redirect("/posts");
+    res.json({ success: true, message: 'Post created successfully', id: this.lastID });
   });
 });
 
@@ -95,12 +96,13 @@ app.put("/posts/:id", (req, res) => {
   const id = req.params.id;
 
   let sql = `update posts set title = '${req.body.title}', content = '${req.body.content}' where id = ${id}`;
-  db.run(sql, (err) => {
+  db.run(sql, function(err) {
     if (err) {
       console.error(err);
+      return res.status(500).json({ error: 'Failed to update post' });
     }
     console.log(`A row has been updated with rowid ${this.lastID}`);
-    res.redirect("/list");
+    res.json({ success: true, message: 'Post updated successfully' });
   });
 });
 
@@ -108,12 +110,13 @@ app.delete("/posts/:id", (req, res) => {
   const id = req.params.id;
 
   let sql = `delete from posts where id = ${id}`;
-  db.run(sql, (err) => {
+  db.run(sql, function(err) {
     if (err) {
       console.error(err);
+      return res.status(500).json({ error: 'Failed to delete post' });
     }
     console.log(`A row has been deleted with rowid ${this.lastID}`);
-    res.redirect("/list");
+    res.json({ success: true, message: 'Post deleted successfully' });
   });
 });
 

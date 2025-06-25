@@ -16,24 +16,14 @@ const posts = [
   },
 ];
 
-// 게시글 목록 조회 (200 OK + 페이지네이션)
+// 게시글 목록 조회 (200 OK)
 app.get("/api/posts", (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const results = {
-      posts: posts.slice(startIndex, endIndex),
-      pagination: {
-        currentPage: page,
-        totalPages: Math.ceil(posts.length / limit),
-        totalPosts: posts.length,
-      },
-    };
-
-    res.status(200).json(results);
+    // 모든 게시글 반환
+    res.status(200).json({
+      status: "success",
+      data: posts,
+    });
   } catch (error) {
     res.status(500).json({
       status: "error",
